@@ -1,3 +1,4 @@
+import Explanation from '@/components/explanation';
 import { DiscussServiceClient } from '@google-ai/generativelanguage';
 import { GoogleAuth } from 'google-auth-library';
 
@@ -8,8 +9,12 @@ export default async function Home() {
   const client = new DiscussServiceClient({
     authClient: new GoogleAuth().fromAPIKey(API_KEY as string),
   });
-  const city = 'seoul';
-  const messages = [{ content: `Explain ${city}.` }];
+  const city = 'Seoul';
+  const messages = [
+    {
+      content: `Explain ${city} to people who wants to visit it like you're a tour guide.`,
+    },
+  ];
 
   const firstResult = await client.generateMessage({
     model: MODEL_NAME, // Required. The model to use to generate the result.
@@ -32,14 +37,16 @@ export default async function Home() {
       messages,
     },
   });
-  const firstResponse = firstResult[0].candidates![0].content as string;
+  const cityInfo = firstResult[0].candidates![0].content as string;
 
   const numOfPeople = 'solo';
   const tripLength = '3 days';
+  // const activitiesList = ['Must-see Attractions', 'Great Food'];
+  // const activities = activitiesList.join(', ');
 
-  messages.push({ content: firstResponse });
+  messages.push({ content: cityInfo });
   messages.push({
-    content: `Generate a personalized itinerary just for me. I'm going ${numOfPeople} to ${city} for ${tripLength}.`,
+    content: `I'm going ${numOfPeople} to ${city} for ${tripLength}.Generate a personalized itinerary for me.`,
   });
 
   const secondResult = await client.generateMessage({
@@ -53,7 +60,8 @@ export default async function Home() {
 
   messages.push({ content: secondResponse });
   messages.push({
-    content: 'Give me google.maps.LatLngLiteral of the places mentioned',
+    content:
+      'Give me the exact names of the places mentioned above that I can search for on google map.',
   });
 
   const thirdResult = await client.generateMessage({
@@ -63,15 +71,13 @@ export default async function Home() {
     prompt: { messages },
   });
 
-  const thirdResponse = thirdResult[0].candidates![0].content;
+  const thirdResponse = thirdResult[0].candidates![0].content as string;
 
   return (
     <main>
-      <pre>First response: {firstResponse}</pre>
+      <h1 className='text-3xl font-bold'>{`Your trip to ${city} for ${tripLength}`}</h1>
       <br />
-      <pre>Second response: {secondResponse}</pre>
-      <br />
-      <pre>Third response: {thirdResponse}</pre>
+      <Explanation cityInfo={cityInfo} />
     </main>
   );
 }

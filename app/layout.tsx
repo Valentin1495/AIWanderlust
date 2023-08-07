@@ -13,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body>{children}</body>
+      <body className='mt-20 mx-auto px-5 sm:max-w-md md:max-w-xl xl:max-w-3xl'>
+        {children}
+      </body>
     </html>
   );
 }
