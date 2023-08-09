@@ -16,7 +16,7 @@ export default async function Itinerary({
   const { city, numOfPeople, tripLength } = searchParams;
 
   const MODEL_NAME = 'models/chat-bison-001';
-  const API_KEY = process.env.API_KEY;
+  const API_KEY = process.env.PALM_API_KEY;
 
   const client = new DiscussServiceClient({
     authClient: new GoogleAuth().fromAPIKey(API_KEY as string),

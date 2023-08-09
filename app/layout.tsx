@@ -1,3 +1,4 @@
+import GoogleMapsApiLoader from '@/google-maps-api-loader';
 import './globals.css';
 import type { Metadata } from 'next';
 
@@ -14,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className='mt-20 mx-auto px-5 sm:max-w-md md:max-w-xl xl:max-w-3xl'>
-        {children}
+        <GoogleMapsApiLoader>{children}</GoogleMapsApiLoader>
       </body>
     </html>
   );
