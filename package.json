@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@google-ai/generativelanguage": "^0.2.1",
+    "@reach/combobox": "^0.18.0",
     "@react-google-maps/api": "^2.19.2",
     "@types/node": "20.4.8",
+    "@types/reach__combobox": "^0.4.0",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.14",

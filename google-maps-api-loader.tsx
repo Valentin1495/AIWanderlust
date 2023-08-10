@@ -11,7 +11,9 @@ export default function GoogleMapsApiLoader({ children }: Props) {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string,
+    libraries: ['places'],
   });
-  if (isLoaded) return children;
-  return <p>Loading...</p>;
+
+  if (!isLoaded) return <p>Loading...</p>;
+  return <div>{children}</div>;
 }
