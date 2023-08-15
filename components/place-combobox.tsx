@@ -43,15 +43,18 @@ function PlaceCombobox({ updateFields }: Props) {
   };
 
   return (
-    <div className='space-y-5'>
-      <h4 className='text-sm text-neutral-500'>Select a City/Town</h4>
+    <div className='space-y-3'>
+      <h1 className='text-3xl font-bold text-neutral-600 mb-5'>
+        Where do you want to go?
+      </h1>
+      <h4 className='text-sm text-neutral-600'>Select a City/Town</h4>
       <section className='space-y-2'>
         <input
           value={value}
           onChange={(e) => setValue(e.target.value)}
           disabled={!ready}
           placeholder='Where to?'
-          className='rounded-full shadow-md px-5 py-3 outline-none text-neutral-500'
+          className='rounded-full shadow-custom px-5 py-3 outline-none text-neutral-500'
         />
         {status === 'OK' && (
           <ul className='shadow-md rounded-md'>

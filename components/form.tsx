@@ -51,9 +51,6 @@ export default function Form() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div>
-          {currentStepIndex + 1} / {steps.length}{' '}
-        </div>
         {step}
         <div>
           {!isFirstStep && (
@@ -61,9 +58,17 @@ export default function Form() {
               Back
             </button>
           )}
-          <button type='submit'>{isLastStep ? 'Finish' : 'Next'}</button>
+
+          <button
+            type='submit'
+            className='fixed bottom-10 right-10 bg-black text-white px-[72px] py-3 rounded-full font-bold hover:opacity-80 transition-opacity'
+          >
+            {isLastStep ? 'Submit' : 'Next'}
+          </button>
         </div>
       </form>
     </div>
   );
 }
+
+//  {currentStepIndex + 1} / {steps.length}{' '}
