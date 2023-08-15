@@ -1,32 +1,19 @@
 'use client';
 
-import { useState } from 'react';
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from 'use-places-autocomplete';
-
-interface SelectedPlace {
-  address: string;
-  lat: number;
-  lng: number;
-}
+import usePlacesAutocomplete from 'use-places-autocomplete';
 
 type Place = {
   place: string;
 };
 
 type Props = {
+  place: string;
   updateFields: (fields: Partial<Place>) => void;
 };
 
-function PlaceCombobox({ updateFields }: Props) {
-  const [selectedPlace, setSelectedPlace] = useState<SelectedPlace | null>(
-    null
-  );
+export default function PlaceCombobox({ place, updateFields }: Props) {
   const {
     ready,
-    value,
     setValue,
     suggestions: { status, data },
     clearSuggestions,
@@ -36,9 +23,9 @@ function PlaceCombobox({ updateFields }: Props) {
     setValue(val, false);
     clearSuggestions();
 
-    const results = await getGeocode({ address: val });
-    const { lat, lng } = getLatLng(results[0]);
-    setSelectedPlace({ address: val, lat, lng });
+    // const results = await getGeocode({ address: val });
+    // const { lat, lng } = getLatLng(results[0]);
+    // setSelectedPlace({ address: val, lat, lng });
     updateFields({ place: val });
   };
 
@@ -50,8 +37,11 @@ function PlaceCombobox({ updateFields }: Props) {
       <h4 className='text-sm text-neutral-600'>Select a City/Town</h4>
       <section className='space-y-2'>
         <input
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
+          value={place}
+          onChange={(e) => {
+            updateFields({ place: e.target.value });
+            setValue(e.target.value);
+          }}
           disabled={!ready}
           placeholder='Where to?'
           className='rounded-full shadow-custom px-5 py-3 outline-none text-neutral-500'
@@ -69,17 +59,7 @@ function PlaceCombobox({ updateFields }: Props) {
             ))}
           </ul>
         )}
-        {selectedPlace && (
-          <div>
-            <h5>Selected Place:</h5>
-            <p>{selectedPlace.address}</p>
-            <p>Latitude: {selectedPlace.lat}</p>
-            <p>Longitude: {selectedPlace.lng}</p>
-          </div>
-        )}
       </section>
     </div>
   );
 }
-
-export default PlaceCombobox;

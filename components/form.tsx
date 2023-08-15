@@ -4,6 +4,7 @@ import PlaceCombobox from '@/components/place-combobox';
 import { useMultistepForm } from '@/hooks/useMultistepForm';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
+import TripLength from './trip-length';
 
 type FormData = {
   place: string;
@@ -37,10 +38,16 @@ export default function Form() {
     goTo,
     next,
     back,
-  } = useMultistepForm([<PlaceCombobox updateFields={updateFields} />]);
+  } = useMultistepForm([
+    <PlaceCombobox {...data} updateFields={updateFields} />,
+    <TripLength />,
+  ]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (!place.trim()) return;
+    if (!isLastStep) return next();
+
     const formattedPlace = place.replace(',', '').split(' ').join('+');
 
     router.push(
@@ -58,13 +65,20 @@ export default function Form() {
               Back
             </button>
           )}
-
-          <button
-            type='submit'
-            className='fixed bottom-10 right-10 bg-black text-white px-[72px] py-3 rounded-full font-bold hover:opacity-80 transition-opacity'
+          <div
+            className={`${
+              !place.trim() ? 'justify-between' : 'justify-end'
+            } fixed bottom-0 inset-x-0 shadow-top flex items-center px-5 h-20`}
           >
-            {isLastStep ? 'Submit' : 'Next'}
-          </button>
+            {!place.trim() && <p className=''>Please select a location</p>}
+
+            <button
+              type='submit'
+              className='bg-black text-white px-[72px] py-3 rounded-full font-bold hover:opacity-80 transition-opacity h-fit'
+            >
+              {isLastStep ? 'Submit' : 'Next'}
+            </button>
+          </div>
         </div>
       </form>
     </div>
