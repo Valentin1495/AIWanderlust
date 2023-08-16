@@ -9,4 +9,10 @@
   .shadow-top {
     box-shadow: 0 -1px 10px #ccc;
   }
+
+  .transition-width {
+    transition-property: width;
+    transition-timing-function: ease-in-out;
+    transition-duration: 300ms;
+  }
 }

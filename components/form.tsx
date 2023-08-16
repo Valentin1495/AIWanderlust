@@ -5,7 +5,8 @@ import { useMultistepForm } from '@/hooks/useMultistepForm';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import TripLength from './trip-length';
-import { BotIcon } from './icons';
+import Header from './header';
+import { ChevronLeftCircleIcon } from './icons';
 
 type FormData = {
   place: string;
@@ -53,7 +54,7 @@ export default function Form() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!place.trim()) return;
+    if (!areCleared) return;
     if (!isLastStep) return next();
 
     router.push(
@@ -64,34 +65,32 @@ export default function Form() {
 
   return (
     <div>
-      <div className='fixed top-0 inset-x-0 flex flex-col items-center justify-center h-20 shadow-md'>
-        <span className='text-sm flex items-center gap-x-2'>
-          <BotIcon className='w-6 h-6' /> Powered by AI
-        </span>
-        {formattedPlace && areCleared && (
-          <h4 className='font-bold'>{formattedPlace} itinerary</h4>
-        )}
-      </div>
+      <Header
+        formattedPlace={formattedPlace}
+        areCleared={areCleared}
+        progress={progress}
+      />
       <form onSubmit={handleSubmit}>
         {step}
-        <div>
+
+        <div
+          className={`${
+            isFirstStep ? 'justify-end' : 'justify-between'
+          } fixed bottom-0 inset-x-0 shadow-top flex items-center px-5 h-20`}
+        >
           {!isFirstStep && (
             <button type='button' onClick={back}>
-              Back
+              <ChevronLeftCircleIcon className='w-10 h-10 text-orange-500 hover:opacity-80 transition-opacity' />
             </button>
           )}
-          <div className='justify-end fixed bottom-0 inset-x-0 shadow-top flex items-center px-5 h-20'>
-            <button
-              type='submit'
-              className='bg-black text-white px-[72px] py-3 rounded-full font-bold hover:opacity-80 transition-opacity h-fit'
-            >
-              {isLastStep ? 'Submit' : 'Next'}
-            </button>
-          </div>
+          <button
+            type='submit'
+            className='bg-orange-500 text-white py-3 rounded-full font-bold hover:opacity-80 transition-opacity h-fit w-48'
+          >
+            {isLastStep ? 'Submit' : 'Next'}
+          </button>
         </div>
       </form>
     </div>
   );
 }
-
-//  {currentStepIndex + 1} / {steps.length}{' '}

@@ -40,7 +40,7 @@ export default function PlaceCombobox({
       <h1 className='text-3xl font-bold text-neutral-600 mb-5'>
         Where do you want to go?
       </h1>
-      <h4 className='text-sm text-neutral-600'>Select a City/Town</h4>
+      <h4 className='text-sm text-neutral-600'>Select a City/Town.</h4>
       <section className='space-y-2'>
         <input
           required
