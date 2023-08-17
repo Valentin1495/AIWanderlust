@@ -2,14 +2,11 @@
 
 import { Dispatch, SetStateAction } from 'react';
 import usePlacesAutocomplete from 'use-places-autocomplete';
-
-type Place = {
-  place: string;
-};
+import { FormData } from './form';
 
 type Props = {
   place: string;
-  updateFields: (fields: Partial<Place>) => void;
+  updateFields: (fields: Partial<FormData>) => void;
   setAreCleared: Dispatch<SetStateAction<boolean>>;
 };
 

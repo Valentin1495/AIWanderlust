@@ -8,16 +8,16 @@ import TripLength from './trip-length';
 import Header from './header';
 import { ChevronLeftCircleIcon } from './icons';
 
-type FormData = {
+export type FormData = {
   place: string;
-  tripLength: string;
-  numOfPeople: string;
+  tripLength: number;
+  numOfPeople: number;
 };
 
 const INITIAL_DATA = {
   place: '',
-  tripLength: '',
-  numOfPeople: '',
+  tripLength: 3,
+  numOfPeople: 1,
 };
 
 export default function Form() {
@@ -47,7 +47,7 @@ export default function Form() {
       updateFields={updateFields}
       setAreCleared={setAreCleared}
     />,
-    <TripLength />,
+    <TripLength {...data} updateFields={updateFields} />,
   ]);
   const indexOfComma = place.includes(',') ? place.indexOf(',') : place.length;
   const formattedPlace = place.slice(0, indexOfComma);
