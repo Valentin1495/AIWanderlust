@@ -1,5 +1,3 @@
-'use client';
-
 import { FormData } from './form';
 import { CalendarMinusIcon, CalendarPlusIcon } from './icons';
 import { MouseEvent, useState, useEffect } from 'react';
@@ -52,18 +50,20 @@ export default function TripLength({ updateFields, tripLength }: Props) {
         <button onClick={subtractDays}>
           <CalendarMinusIcon
             className={`${
-              deactivateMinus &&
-              'text-black/20 cursor-not-allowed active:text-black/20'
-            } w-6 h-6 active:text-black/50`}
+              deactivateMinus
+                ? 'text-black/20 cursor-not-allowed active:text-black/20'
+                : 'active:text-black/50'
+            } w-6 h-6 `}
           />
         </button>
         <span className='text-lg font-bold'>{tripLength}</span>
         <button onClick={addDays}>
           <CalendarPlusIcon
             className={`${
-              deactivatePlus &&
-              'text-black/20 cursor-not-allowed active:text-black/20'
-            } w-6 h-6 active:text-black/50`}
+              deactivatePlus
+                ? 'text-black/20 cursor-not-allowed active:text-black/20'
+                : 'active:text-black/50'
+            } w-6 h-6 `}
           />
         </button>
       </section>

@@ -15,4 +15,8 @@
     transition-timing-function: ease-in-out;
     transition-duration: 300ms;
   }
+
+  .option {
+    @apply w-10 h-10 text-neutral-500 rounded-full p-2 transition-colors;
+  }
 }

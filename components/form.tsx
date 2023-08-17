@@ -7,17 +7,18 @@ import { FormEvent, useState } from 'react';
 import TripLength from './trip-length';
 import Header from './header';
 import { ChevronLeftCircleIcon } from './icons';
+import NumOfPeople from './number-of-people';
 
 export type FormData = {
   place: string;
   tripLength: number;
-  numOfPeople: number;
+  numOfPeople: string;
 };
 
 const INITIAL_DATA = {
   place: '',
   tripLength: 3,
-  numOfPeople: 1,
+  numOfPeople: '',
 };
 
 export default function Form() {
@@ -48,6 +49,7 @@ export default function Form() {
       setAreCleared={setAreCleared}
     />,
     <TripLength {...data} updateFields={updateFields} />,
+    <NumOfPeople {...data} updateFields={updateFields} />,
   ]);
   const indexOfComma = place.includes(',') ? place.indexOf(',') : place.length;
   const formattedPlace = place.slice(0, indexOfComma);
@@ -61,7 +63,7 @@ export default function Form() {
       `/${formattedPlace}+itinerary?tripLength=${tripLength}&numOfPeople=${numOfPeople}`
     );
   };
-  const progress = (currentStepIndex + 1 / steps.length) * 100;
+  const progress = ((currentStepIndex + 1) / steps.length) * 100;
 
   return (
     <div>

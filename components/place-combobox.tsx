@@ -1,5 +1,3 @@
-'use client';
-
 import { Dispatch, SetStateAction } from 'react';
 import usePlacesAutocomplete from 'use-places-autocomplete';
 import { FormData } from './form';

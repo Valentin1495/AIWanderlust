@@ -2,7 +2,7 @@ import Form from '@/components/form';
 
 export default function GenerateItinerary() {
   return (
-    <div>
+    <div className='flex justify-center'>
       <Form />
     </div>
   );

@@ -23,7 +23,7 @@ export default function Header({
         )}
       </div>
       <div
-        className='bg-orange-300 h-1.5 duration'
+        className='bg-orange-300 h-1.5'
         style={{
           width: progressPct,
           transition: 'width 0.3s linear',
