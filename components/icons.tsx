@@ -19,7 +19,7 @@ export const BotIcon = ({ className }: { className: string }) => (
   </svg>
 );
 
-export const ChevronLeftCircleIcon = ({ className }: { className: string }) => (
+export const ArrowBigLeftDashIcon = ({ className }: { className: string }) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     width='24'
@@ -32,8 +32,8 @@ export const ChevronLeftCircleIcon = ({ className }: { className: string }) => (
     strokeLinejoin='round'
     className={className}
   >
-    <circle cx='12' cy='12' r='10' />
-    <path d='m14 16-4-4 4-4' />
+    <path d='M19 15V9' />
+    <path d='M15 15h-3v4l-7-7 7-7v4h3v6z' />
   </svg>
 );
 

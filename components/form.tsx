@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import TripLength from './trip-length';
 import Header from './header';
-import { ChevronLeftCircleIcon } from './icons';
+import { ArrowBigLeftDashIcon } from './icons';
 import NumOfPeople from './number-of-people';
 
 export type FormData = {
@@ -60,10 +60,10 @@ export default function Form() {
     if (!isLastStep) return next();
 
     router.push(
-      `/${formattedPlace}+itinerary?tripLength=${tripLength}&numOfPeople=${numOfPeople}`
+      `/itinerary/${formattedPlace}?tripLength=${tripLength}&numOfPeople=${numOfPeople}`
     );
   };
-  const progress = ((currentStepIndex + 1) / steps.length) * 100;
+  const progress = (currentStepIndex / (steps.length - 1)) * 100;
 
   return (
     <div>
@@ -81,8 +81,15 @@ export default function Form() {
           } fixed bottom-0 inset-x-0 shadow-top flex items-center px-5 h-20`}
         >
           {!isFirstStep && (
-            <button type='button' onClick={back}>
-              <ChevronLeftCircleIcon className='w-10 h-10 text-orange-500 hover:opacity-80 transition-opacity' />
+            <button
+              type='button'
+              onClick={back}
+              className='flex items-center gap-x-1 hover:opacity-80 transition-opacity'
+            >
+              <ArrowBigLeftDashIcon className='w-7 h-7 text-orange-500' />
+              <span className='text-orange-500 font-bold underline underline-offset-4'>
+                Back
+              </span>
             </button>
           )}
           <button
