@@ -39,7 +39,7 @@ export default function Form() {
     steps,
     isFirstStep,
     isLastStep,
-    goTo,
+    // goTo,
     next,
     back,
   } = useMultistepForm([
