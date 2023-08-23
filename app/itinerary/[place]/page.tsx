@@ -1,4 +1,4 @@
-import PlaceExplanation from '@/components/place-explanation';
+import TouristAttractions from '@/components/tourist-attractions';
 import Plan from '@/components/plan';
 import { DiscussServiceClient } from '@google-ai/generativelanguage';
 import { GoogleAuth } from 'google-auth-library';
@@ -30,7 +30,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
 
   const messages = [
     {
-      content: `Introduce ${decodedPlace} to people who wants to visit it like you're a tour guide.`,
+      content: `Introduce must-see attractions in ${decodedPlace} to people who wants to visit it like you're a tour guide.`,
     },
   ];
 
@@ -42,27 +42,26 @@ export default async function Itinerary({ params, searchParams }: Props) {
       // optional, preamble context to prime responses
       // context: "",
       // Optional. Examples for further fine-tuning of responses.
-      examples: [
-        {
-          input: { content: `Introduce Seoul.` },
-          output: {
-            content: `
-            Seoul, the bustling capital city of South Korea, is a perfect destination for a 3-day trip in September with your partner. With a lively nightlife scene and a plethora of bars and breweries, Seoul is an ideal place for wine and beer enthusiasts. The place is also known for its unique blend of ancient traditions and modern technology, offering a diverse range of activities and attractions. Explore the traditional markets, indulge in the mouth-watering street food, visit the stunning palaces and temples, and take a stroll in the beautiful parks. Seoul has something for everyone, making it a great destination for a memorable trip with your loved one.`,
-          },
-        },
-      ],
+      // examples: [
+      //   {
+      //     input: { content: `` },
+      //     output: {
+      //       content: ``,
+      //     },
+      //   },
+      // ],
       // Required. Alternating prompt/response messages.
       messages,
     },
   });
   const firstResponse = firstResult[0].candidates![0].content as string;
-  const placeInfo = firstResponse;
+  const sights = firstResponse;
   // const activitiesList = ['Must-see Attractions', 'Great Food'];
   // const activities = activitiesList.join(', ');
 
-  messages.push({ content: placeInfo });
+  messages.push({ content: sights });
   messages.push({
-    content: `I'm planning to visit ${decodedPlace} ${people} for ${tripLength} days. Can you curate a tour for me?`,
+    content: `I'm planning to visit ${decodedPlace} ${people} for ${tripLength} days. Can you curate a tour for me based on the sights you mentioned?`,
   });
 
   const secondResult = await client.generateMessage({
@@ -75,18 +74,18 @@ export default async function Itinerary({ params, searchParams }: Props) {
   const secondResponse = secondResult[0].candidates![0].content as string;
   const plan = secondResponse;
 
-  messages.push({ content: secondResponse });
-  messages.push({
-    content:
-      'Give me the exact names of the places mentioned above that I can search for on google map.',
-  });
+  // messages.push({ content: plan });
+  // messages.push({
+  //   content:
+  //     'Give me the exact names of the places mentioned above that I can search for on google map.',
+  // });
 
-  const thirdResult = await client.generateMessage({
-    model: MODEL_NAME,
-    temperature: 0.5,
-    candidateCount: 1,
-    prompt: { messages },
-  });
+  // const thirdResult = await client.generateMessage({
+  //   model: MODEL_NAME,
+  //   temperature: 0.5,
+  //   candidateCount: 1,
+  //   prompt: { messages },
+  // });
 
   //   const thirdResponse = thirdResult[0].candidates![0].content as string;
 
@@ -94,7 +93,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
     <main>
       <h1 className='text-3xl font-bold'>{`Your trip to ${decodedPlace} for ${tripLength} ${dayOrDays}`}</h1>
       <br />
-      <PlaceExplanation placeInfo={placeInfo} />
+      <TouristAttractions sights={sights} />
       <Plan plan={plan} />
     </main>
   );

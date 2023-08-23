@@ -14,7 +14,7 @@ export default function Loading() {
         alt='plane'
         width={402}
         height={267}
-        className='rounded-xl'
+        className='rounded-xl animate-bounce'
       />
       <p className='w-[402px] text-neutral-600 text-lg bg-neutral-100 p-2 rounded-sm'>
         {decodedPlace} is a great choice! We're gathering popular things to do,
