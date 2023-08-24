@@ -90,7 +90,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
   //   const thirdResponse = thirdResult[0].candidates![0].content as string;
 
   return (
-    <main>
+    <main className='pb-5'>
       <h1 className='text-3xl font-bold'>{`Your trip to ${decodedPlace} for ${tripLength} ${dayOrDays}`}</h1>
       <br />
       <TouristAttractions sights={sights} />
