@@ -2,6 +2,7 @@
 
 import { useJsApiLoader } from '@react-google-maps/api';
 import { ReactNode } from 'react';
+import Loader from './components/loader';
 
 type Props = {
   children: ReactNode;
@@ -14,6 +15,12 @@ export default function GoogleMapsApiLoader({ children }: Props) {
     libraries: ['places'],
   });
 
-  if (!isLoaded) return <p>Loading...</p>;
+  if (!isLoaded)
+    return (
+      <div className='flex justify-center'>
+        <Loader />
+      </div>
+    );
+
   return <div>{children}</div>;
 }
