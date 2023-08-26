@@ -17,8 +17,8 @@ export default function Loading() {
         className='rounded-xl animate-bounce'
       />
       <p className='w-[402px] text-neutral-600 text-lg bg-neutral-100 p-2 rounded-sm'>
-        {decodedPlace} is a great choice! We're gathering must-see attractions
-        and more... <br />
+        {decodedPlace} is a great choice! We're gathering must-see attractions,
+        some tips, and more... <br />
         (Friendly reminder: AI isn't always perfect, but it'll help you hit the
         ground running.)
       </p>
