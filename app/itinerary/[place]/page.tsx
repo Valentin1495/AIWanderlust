@@ -4,6 +4,7 @@ import { DiscussServiceClient } from '@google-ai/generativelanguage';
 import { GoogleAuth } from 'google-auth-library';
 import { MapPinIcon } from '@/components/icons';
 import extractAttractions from '@/utils/extractAttractions';
+import Map from '@/components/map';
 
 type Props = {
   params: {
@@ -11,13 +12,15 @@ type Props = {
   };
 
   searchParams: {
+    lat: string;
+    lng: string;
     tripLength: string;
     numOfPeople: string;
   };
 };
 
 export default async function Itinerary({ params, searchParams }: Props) {
-  const { numOfPeople, tripLength } = searchParams;
+  const { numOfPeople, tripLength, lat, lng } = searchParams;
   const { place } = params;
   const decodedPlace = decodeURIComponent(place);
   const dayOrDays = tripLength === '1' ? 'day' : 'days';
@@ -32,7 +35,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
 
   const messages = [
     {
-      content: `Introduce must-see attractions in ${decodedPlace} to people who wants to visit it like you're a tour guide. They should be clearly labeled "1.", "2.", "3."...`,
+      content: `Introduce must-see attractions in ${decodedPlace} to people who wants to visit it like you're a tour guide. They should be clearly labeled '1.', '2.', '3.'... etc.`,
     },
   ];
 
@@ -48,7 +51,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
         {
           input: {
             content: `
-          Introduce must-see attractions in Paris to people who wants to visit it like you're a tour guide. They should be clearly labeled "1.", "2.", "3."...
+          Introduce must-see attractions in Paris to people who wants to visit it like you're a tour guide. They should be clearly labeled '1.', '2.', '3.'... etc.
           `,
           },
           output: {
@@ -56,33 +59,33 @@ export default async function Itinerary({ params, searchParams }: Props) {
             Paris, often referred to as the "City of Light," is renowned for its rich history, iconic landmarks, and artistic heritage. There are numerous must-see attractions in Paris that cater to a wide range of interests. Here are some of the most popular ones:
 
             1. Eiffel Tower: This iconic iron tower is synonymous with Paris and offers breathtaking views of the city from its observation decks. It's especially stunning when lit up at night.
-
+            
             2. Louvre Museum: One of the world's largest and most famous art museums, the Louvre is home to thousands of artworks, including the Mona Lisa and the Venus de Milo.
-
+            
             3. Notre-Dame Cathedral: Despite the fire in 2019, this historic cathedral still remains a marvel of Gothic architecture. Visitors can admire its intricate facade and interior.
-
+            
             4. Champs-Élysées and Arc de Triomphe: The grand Champs-Élysées avenue leads to the Arc de Triomphe, a monument honoring those who fought and died during the French Revolutionary and Napoleonic Wars.
-
+            
             5. Montmartre and Sacré-Cœur Basilica: The charming neighborhood of Montmartre offers narrow streets, artists' studios, and the beautiful Sacré-Cœur Basilica with panoramic views of the city.
-
+            
             6. Seine River Cruises: Cruising along the Seine River offers a unique perspective of Paris, allowing you to see many of its landmarks from a different angle.
-
+            
             7. Musée d'Orsay: Housed in a former railway station, this museum showcases an impressive collection of Impressionist and Post-Impressionist masterpieces.
-
+            
             8. Palace of Versailles: While technically just outside Paris, the opulent Palace of Versailles is a must-visit. Its stunning architecture, vast gardens, and rich history are awe-inspiring.
-
+            
             9. Sainte-Chapelle: This medieval Gothic chapel is known for its stunning stained glass windows that depict biblical scenes in vibrant colors.
-
+            
             10. Les Invalides: This complex includes the Musée de l'Armée, which houses military artifacts and the tomb of Napoleon Bonaparte.
-
+            
             11. Musée Rodin: Home to numerous works by the sculptor Auguste Rodin, including his famous piece "The Thinker."
-
+            
             12. Panthéon: An impressive neoclassical mausoleum that houses the remains of many notable French figures.
-
+            
             13. Cruise on the Seine River: Taking a boat cruise along the Seine River allows you to enjoy a different perspective of the city and its landmarks.
-
+            
             14. Luxembourg Gardens: A serene oasis in the heart of the city, perfect for a leisurely stroll and enjoying the picturesque surroundings.
-
+            
             These are just a few of the many attractions Paris has to offer. Remember that the city is also known for its culinary scene, charming neighborhoods, and vibrant cultural life, so take the time to explore beyond the well-known landmarks as well.
             `,
           },
@@ -94,12 +97,10 @@ export default async function Itinerary({ params, searchParams }: Props) {
   });
   const firstResponse = firstResult[0].candidates![0].content as string;
   const sights = firstResponse;
-  // const activitiesList = ['Must-see Attractions', 'Great Food'];
-  // const activities = activitiesList.join(', ');
 
   messages.push({ content: sights });
   messages.push({
-    content: `I'm planning to visit ${decodedPlace} ${people} for ${tripLength} days. Can you curate a tour for me based on the sights you mentioned?`,
+    content: `I'm planning to visit ${decodedPlace} ${people} for ${tripLength} days. Can you curate a tour for me based on the sights you mentioned? Don't use '*'.`,
   });
 
   const secondResult = await client.generateMessage({
@@ -112,22 +113,50 @@ export default async function Itinerary({ params, searchParams }: Props) {
   const secondResponse = secondResult[0].candidates![0].content as string;
   const plan = secondResponse;
 
-  // messages.push({ content: plan });
-  // messages.push({
-  //   content:
-  //     'Give me the exact names of the places mentioned above that I can search for on google map.',
-  // });
+  messages.push({ content: plan });
+  messages.push({
+    content: `Give me the coordinates of the places you mentioned. Don't use *`,
+  });
 
-  // const thirdResult = await client.generateMessage({
-  //   model: MODEL_NAME,
-  //   temperature: 0.5,
-  //   candidateCount: 1,
-  //   prompt: { messages },
-  // });
+  const thirdResult = await client.generateMessage({
+    model: MODEL_NAME,
+    temperature: 0.5,
+    candidateCount: 1,
+    prompt: {
+      examples: [
+        {
+          input: {
+            content: `Give me the coordinates of the places you mentioned. Don't use '*'.`,
+          },
+          output: {
+            content: `
+            Eiffel Tower: 48.853222, 2.349044
+            Louvre Museum: 48.853926, 2.348424
+            Notre Dame Cathedral: 48.853423, 2.349029
+            Montmartre and the Sacré-Cœur Basilica: 48.889500, 2.348750
+            Champs-Élysées and Arc de Triomphe: 48.869500, 2.348750
+            Seine River and River Cruises: 48.853423, 2.349029
+            Palace of Versailles: 48.848614, 2.194322
+            Musée d'Orsay: 48.863333, 2.348333
+            Sainte-Chapelle: 48.853222, 2.349044
+            Luxembourg Gardens: 48.853926, 2.348424
+            `,
+          },
+        },
+      ],
+      messages,
+    },
+  });
 
-  //   const thirdResponse = thirdResult[0].candidates![0].content as string;
-  const attractions = extractAttractions(sights);
-  console.log(attractions);
+  const thirdResponse = thirdResult[0].candidates![0].content as string;
+
+  const lines = thirdResponse.trim().split('\n');
+  const coordinates = lines.slice(2, lines.length - 2).map((line) => {
+    const [name, coords] = line.split(': ');
+    const [lat, lng] = coords.split(', ').map(parseFloat);
+    return { name, lat, lng };
+  });
+
   return (
     <main className='pb-5'>
       <h6 className='flex gap-x-2 items-center mb-3 text-neutral-600'>
@@ -135,6 +164,8 @@ export default async function Itinerary({ params, searchParams }: Props) {
         <span>This trip is powered by AI.</span>
       </h6>
       <h1 className='text-3xl font-bold'>{`Your trip to ${decodedPlace} for ${tripLength} ${dayOrDays}`}</h1>
+      <br />
+      <Map lat={Number(lat)} lng={Number(lng)} />
       <br />
       <TouristAttractions sights={sights} />
       <Plan plan={plan} />

@@ -8,7 +8,7 @@ export default function Loading() {
   const decodedPlace = decodeURIComponent(place as string);
 
   return (
-    <div className='flex flex-col items-center gap-y-3'>
+    <div className='flex flex-col items-center justify-center min-h-[calc(100vh-160px)] gap-y-3'>
       <Image
         src={'/plane-unsplash.jpg'}
         alt='plane'

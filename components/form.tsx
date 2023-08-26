@@ -11,12 +11,16 @@ import NumOfPeople from './number-of-people';
 
 export type FormData = {
   place: string;
+  lat: number | null;
+  lng: number | null;
   tripLength: number;
   numOfPeople: string;
 };
 
 const INITIAL_DATA = {
   place: '',
+  lat: null,
+  lng: null,
   tripLength: 3,
   numOfPeople: '',
 };
@@ -25,7 +29,7 @@ export default function Form() {
   const [data, setData] = useState<FormData>(INITIAL_DATA);
   const [areCleared, setAreCleared] = useState<boolean>(false);
   const router = useRouter();
-  const { place, tripLength, numOfPeople } = data;
+  const { place, tripLength, numOfPeople, lat, lng } = data;
 
   const updateFields = (fields: Partial<FormData>) => {
     setData((prev) => {
@@ -51,8 +55,19 @@ export default function Form() {
     <TripLength {...data} updateFields={updateFields} />,
     <NumOfPeople {...data} updateFields={updateFields} />,
   ]);
-  const indexOfComma = place.includes(',') ? place.indexOf(',') : place.length;
-  const formattedPlace = place.slice(0, indexOfComma);
+  const comma = place.includes(',');
+  const dash = place.includes('-');
+  const indexOfComma = place.indexOf(',');
+  const indexOfDash = place.indexOf('-');
+  let formattedPlace = '';
+
+  if (comma) {
+    formattedPlace = place.slice(0, indexOfComma);
+  } else if (dash) {
+    formattedPlace = place.slice(0, indexOfDash - 1);
+  } else {
+    formattedPlace = place.slice(0, place.length);
+  }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -60,7 +75,7 @@ export default function Form() {
     if (!isLastStep) return next();
 
     router.push(
-      `/itinerary/${formattedPlace}?tripLength=${tripLength}&numOfPeople=${numOfPeople}`
+      `/itinerary/${formattedPlace}?lat=${lat}&lng=${lng}&tripLength=${tripLength}&numOfPeople=${numOfPeople}`
     );
   };
   const progress = (currentStepIndex / (steps.length - 1)) * 100;

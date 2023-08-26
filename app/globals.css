@@ -27,4 +27,8 @@
   .btn {
     @apply bg-orange-500 text-white rounded-full font-bold hover:bg-opacity-90 transition-all;
   }
+
+  .map-container {
+    @apply w-full h-[50vh];
+  }
 }

@@ -8,9 +8,7 @@ const extractAttractions = (attractionsString: string) => {
     attractionsArray.push(match[1]);
   }
 
-  const namesArray = attractionsArray.map((el) => el.slice(2));
-
-  return namesArray;
+  return attractionsArray;
 };
 
 export default extractAttractions;

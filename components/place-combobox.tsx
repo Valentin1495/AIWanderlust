@@ -1,5 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
-import usePlacesAutocomplete from 'use-places-autocomplete';
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from 'use-places-autocomplete';
 import { FormData } from './form';
 import { SearchIcon } from './icons';
 
@@ -25,10 +28,10 @@ export default function PlaceCombobox({
     setValue(val, false);
     clearSuggestions();
     setAreCleared(true);
-    // const results = await getGeocode({ address: val });
-    // const { lat, lng } = getLatLng(results[0]);
+    const results = await getGeocode({ address: val });
+    const { lat, lng } = getLatLng(results[0]);
     // setSelectedPlace({ address: val, lat, lng });
-    updateFields({ place: val });
+    updateFields({ place: val, lat, lng });
   };
 
   return (
