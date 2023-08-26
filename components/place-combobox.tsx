@@ -31,11 +31,10 @@ export default function PlaceCombobox({
   };
 
   return (
-    <div className='space-y-3 pt-10'>
+    <div className='space-y-8 pt-10'>
       <h1 className='text-3xl font-bold text-neutral-600 mb-5'>
         Where do you want to go?
       </h1>
-      <h4 className='text-sm text-neutral-600'>Select a City/Town.</h4>
       <section className='space-y-2'>
         <input
           required
@@ -46,7 +45,7 @@ export default function PlaceCombobox({
             setValue(e.target.value);
           }}
           disabled={!ready}
-          placeholder='Where to?'
+          placeholder='Search by city or town'
           className='rounded-full shadow-custom px-5 py-3 outline-none text-neutral-500 w-full'
         />
         {status === 'OK' && (

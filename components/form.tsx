@@ -92,10 +92,7 @@ export default function Form() {
               </span>
             </button>
           )}
-          <button
-            type='submit'
-            className='bg-orange-500 text-white py-3 rounded-full font-bold hover:opacity-80 transition-opacity h-fit w-48'
-          >
+          <button type='submit' className='btn py-3 h-fit w-48'>
             {isLastStep ? 'Submit' : 'Next'}
           </button>
         </div>

@@ -23,4 +23,8 @@
   .loader {
     @apply border-4 border-orange-300 border-t-4 border-t-orange-500 rounded-full animate-spin;
   }
+
+  .btn {
+    @apply bg-orange-500 text-white rounded-full font-bold hover:bg-opacity-90 transition-all;
+  }
 }
