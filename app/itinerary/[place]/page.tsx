@@ -3,7 +3,6 @@ import Plan from '@/components/plan';
 import { DiscussServiceClient } from '@google-ai/generativelanguage';
 import { GoogleAuth } from 'google-auth-library';
 import { MapPinIcon } from '@/components/icons';
-import extractAttractions from '@/utils/extractAttractions';
 import Map from '@/components/map';
 
 type Props = {
@@ -35,13 +34,13 @@ export default async function Itinerary({ params, searchParams }: Props) {
 
   const messages = [
     {
-      content: `Introduce must-see attractions in ${decodedPlace} to people who wants to visit it like you're a tour guide. They should be clearly labeled '1.', '2.', '3.'... etc.`,
+      content: `Introduce must-see attractions in ${decodedPlace} to people who wants to visit it like you're a tour guide. They should be clearly labeled '1.', '2.', '3.'... etc. Don't use '**'.`,
     },
   ];
 
   const firstResult = await client.generateMessage({
     model: MODEL_NAME, // Required. The model to use to generate the result.
-    temperature: 0.5, // Optional. Value `0.0` always uses the highest-probability result.
+    temperature: 0.25, // Optional. Value `0.0` always uses the highest-probability result.
     candidateCount: 1, // Optional. The number of candidate results to generate.
     prompt: {
       // optional, preamble context to prime responses
@@ -51,7 +50,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
         {
           input: {
             content: `
-          Introduce must-see attractions in Paris to people who wants to visit it like you're a tour guide. They should be clearly labeled '1.', '2.', '3.'... etc.
+          Introduce must-see attractions in Paris to people who wants to visit it like you're a tour guide. They should be clearly labeled '1.', '2.', '3.'... etc. Don't use '**'.
           `,
           },
           output: {
@@ -100,46 +99,72 @@ export default async function Itinerary({ params, searchParams }: Props) {
 
   messages.push({ content: sights });
   messages.push({
-    content: `I'm planning to visit ${decodedPlace} ${people} for ${tripLength} days. Can you curate a tour for me based on the sights you mentioned? Don't use '*'.`,
+    content: `I'm planning to visit ${decodedPlace} ${people} for ${tripLength} days. Can you curate a tour for me based on the sights you mentioned?`,
   });
 
   const secondResult = await client.generateMessage({
     model: MODEL_NAME,
-    temperature: 0.5,
-    candidateCount: 1,
-    prompt: { messages },
-  });
-
-  const secondResponse = secondResult[0].candidates![0].content as string;
-  const plan = secondResponse;
-
-  messages.push({ content: plan });
-  messages.push({
-    content: `Give me the coordinates of the places you mentioned. Don't use *`,
-  });
-
-  const thirdResult = await client.generateMessage({
-    model: MODEL_NAME,
-    temperature: 0.5,
+    temperature: 0.25,
     candidateCount: 1,
     prompt: {
       examples: [
         {
           input: {
-            content: `Give me the coordinates of the places you mentioned. Don't use '*'.`,
+            content: `
+      I'm planning to visit New York for 3 days. Can you curate a tour for me based on the sights you mentioned?
+      `,
           },
           output: {
             content: `
-            Eiffel Tower: 48.853222, 2.349044
-            Louvre Museum: 48.853926, 2.348424
-            Notre Dame Cathedral: 48.853423, 2.349029
-            Montmartre and the Sacré-Cœur Basilica: 48.889500, 2.348750
-            Champs-Élysées and Arc de Triomphe: 48.869500, 2.348750
-            Seine River and River Cruises: 48.853423, 2.349029
-            Palace of Versailles: 48.848614, 2.194322
-            Musée d'Orsay: 48.863333, 2.348333
-            Sainte-Chapelle: 48.853222, 2.349044
-            Luxembourg Gardens: 48.853926, 2.348424
+      Of course! Paris is a beautiful city with a wealth of attractions to explore. Here's a suggested itinerary for your 3-day trip:
+
+      Day 1: Explore the Icons
+        Morning: Start your day at the iconic Eiffel Tower. Arrive early to beat the crowds and enjoy breathtaking views of the city from the top.
+        Afternoon: Head to the Louvre Museum, home to an incredible collection of art and historical artifacts. Don't miss the Mona Lisa and other famous masterpieces.
+        Evening: Take a leisurely stroll along the Seine River and enjoy the romantic atmosphere. Consider a Seine River cruise to see the city's landmarks beautifully illuminated at night.
+      
+      Day 2: Art, History, and Montmartre
+        Morning: Visit the artistic Montmartre neighborhood. Explore the Sacré-Cœur Basilica for panoramic city views and discover the charming streets that have inspired many artists.
+        Afternoon: Spend the afternoon at the Musée d'Orsay, which houses an impressive collection of Impressionist and Post-Impressionist masterpieces.
+        Evening: Explore the vibrant Le Marais district, known for its historic architecture, trendy boutiques, and lively nightlife. Enjoy a leisurely dinner at a local bistro.
+      
+      Day 3: Champs-Élysées, Notre-Dame, and River Cruise
+        Morning: Walk down the famous Champs-Élysées avenue, lined with shops, cafes, and landmarks. Reach the Arc de Triomphe and admire the grandeur of the city from its viewpoint.
+        Afternoon: Visit the Cathédrale Notre-Dame de Paris. Although parts of it were damaged in a fire, it's still worth seeing for its historical significance and Gothic architecture.
+        Late Afternoon: Embark on a relaxing Seine River cruise to see many of Paris' major landmarks from the water.
+        Evening: Wrap up your trip with a delightful dinner at a traditional Parisian brasserie.
+      
+      Remember that this itinerary is just a suggestion, and you should tailor it to your interests and pace. Paris has so much to offer, from its world-class museums and landmarks to its charming neighborhoods and culinary delights. Make sure to also take time to wander the streets, indulge in some delicious pastries, and soak in the Parisian atmosphere. Bon voyage!
+      `,
+          },
+        },
+      ],
+      messages,
+    },
+  });
+
+  const secondResponse = secondResult[0].candidates![0].content as string;
+  const plan = secondResponse;
+  messages.push({ content: plan });
+  messages.push({
+    content: `Give me the exact address of the attractions you mentioned. I want to search for them on Google map. Don't use '**'.`,
+  });
+
+  const thirdResult = await client.generateMessage({
+    model: MODEL_NAME,
+    temperature: 0.25,
+    candidateCount: 1,
+    prompt: {
+      examples: [
+        {
+          input: {
+            content: `Give me the exact address of the attractions you mentioned. I want to search for them on Google map. Don't use '**'.`,
+          },
+          output: {
+            content: `
+            1. Eiffel Tower: 5 Avenue Anatole France, 75007 Paris, France
+            2. Louvre Museum: 99 Rue de Rivoli, 75001 Paris, France
+            3. Notre Dame Cathedral: 6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris, France
             `,
           },
         },
@@ -148,14 +173,25 @@ export default async function Itinerary({ params, searchParams }: Props) {
     },
   });
 
-  const thirdResponse = thirdResult[0].candidates![0].content as string;
+  const thirdResponse = thirdResult[0].candidates![0]?.content as string;
+  console.log(thirdResponse);
 
-  const lines = thirdResponse.trim().split('\n');
-  const coordinates = lines.slice(2, lines.length - 2).map((line) => {
-    const [name, coords] = line.split(': ');
-    const [lat, lng] = coords.split(', ').map(parseFloat);
-    return { name, lat, lng };
-  });
+  const addressRegex = /:\s(.*?)(?=\n|$)/g;
+  const addressesArray = thirdResponse
+    ?.match(addressRegex)
+    ?.map((item) => item.replace(/:\s/, ''));
+
+  let addresses = addressesArray?.slice(1);
+  if (!addresses?.length) {
+    const regex = /\*\*(.*?):\*\*\s(.*?), (.*)/g;
+
+    let match;
+
+    while ((match = regex.exec(thirdResponse)) !== null) {
+      const address = `${match[2]}, ${match[3]}`;
+      addresses?.push(address);
+    }
+  }
 
   return (
     <main className='pb-5'>
@@ -165,7 +201,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
       </h6>
       <h1 className='text-3xl font-bold'>{`Your trip to ${decodedPlace} for ${tripLength} ${dayOrDays}`}</h1>
       <br />
-      <Map lat={Number(lat)} lng={Number(lng)} />
+      <Map lat={Number(lat)} lng={Number(lng)} addresses={addresses} />
       <br />
       <TouristAttractions sights={sights} />
       <Plan plan={plan} />
