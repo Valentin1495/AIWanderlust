@@ -8,6 +8,7 @@ import TripLength from './trip-length';
 import Header from './header';
 import { ArrowBigLeftDashIcon } from './icons';
 import NumOfPeople from './number-of-people';
+import replaceBlankWithPlus from '@/utils/replaceBlankWithPlus';
 
 export type FormData = {
   place: string;
@@ -72,6 +73,7 @@ export default function Form() {
     e.preventDefault();
     if (!areCleared) return;
     if (!isLastStep) return next();
+    formattedPlace = replaceBlankWithPlus(formattedPlace);
 
     router.push(
       `/itinerary/${formattedPlace}?lat=${lat}&lng=${lng}&tripLength=${tripLength}&numOfPeople=${formattedNumOfPeople}`

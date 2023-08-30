@@ -5,12 +5,12 @@ import { GoogleAuth } from 'google-auth-library';
 import { MapPinIcon } from '@/components/icons';
 import Map from '@/components/map';
 import formatNumOfPeople from '@/utils/formatNumOfPeople';
+import replacePlusWithBlank from '@/utils/replacePlusWithBlank';
 
 type Props = {
   params: {
     place: string;
   };
-
   searchParams: {
     lat: string;
     lng: string;
@@ -19,10 +19,22 @@ type Props = {
   };
 };
 
+type Prop = Pick<Props, 'params'>;
+
+export async function generateMetadata({ params }: Prop) {
+  const { place } = params;
+  const decodedPlace = decodeURIComponent(place);
+  const replacedPlace = replacePlusWithBlank(decodedPlace);
+  return {
+    title: `TravelGPT - ${replacedPlace} Itinerary`,
+  };
+}
+
 export default async function Itinerary({ params, searchParams }: Props) {
   const { numOfPeople, tripLength, lat, lng } = searchParams;
   const { place } = params;
   const decodedPlace = decodeURIComponent(place);
+  const replacedPlace = replacePlusWithBlank(decodedPlace);
   const dayOrDays = tripLength === '1' ? 'day' : 'days';
   const withWhom1 =
     numOfPeople === 'Going+Solo' ? '' : `with my ${numOfPeople}`;
@@ -36,7 +48,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
 
   const messages = [
     {
-      content: `Introduce must-see attractions in ${decodedPlace} to people who wants to visit it like you're a tour guide. They should be clearly labeled '1.', '2.', '3.'... etc.`,
+      content: `Introduce must-see attractions in ${replacedPlace} to people who wants to visit it like you're a tour guide. They should be clearly labeled '1.', '2.', '3.'... etc.`,
     },
   ];
 
@@ -101,7 +113,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
 
   messages.push({ content: sights });
   messages.push({
-    content: `I'm planning to visit ${decodedPlace} ${withWhom1} for ${tripLength} days. Can you curate a tour for me based on the sights you mentioned?`,
+    content: `I'm planning to visit ${replacedPlace} ${withWhom1} for ${tripLength} days. Can you curate a tour for me based on the sights you mentioned?`,
   });
 
   const secondResult = await client.generateMessage({
@@ -154,7 +166,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
         <MapPinIcon className='h-8 w-8 rounded-full bg-orange-200 p-1.5' />
         <span>This trip is powered by AI.</span>
       </h6>
-      <h1 className='text-3xl font-bold'>{`Your trip to ${decodedPlace} for ${tripLength} ${dayOrDays} ${withWhom2}`}</h1>
+      <h1 className='text-3xl font-bold'>{`Your trip to ${replacedPlace} for ${tripLength} ${dayOrDays} ${withWhom2}`}</h1>
       <br />
       <Map lat={Number(lat)} lng={Number(lng)} />
       <br />
