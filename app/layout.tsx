@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en' className={lora.className}>
-      <body className='mt-20 mx-auto px-5 sm:max-w-md md:max-w-xl xl:max-w-3xl'>
+      <body className='mt-20 mx-auto px-5 sm:max-w-xl xl:max-w-3xl'>
         <GoogleMapsApiLoader>{children}</GoogleMapsApiLoader>
       </body>
     </html>

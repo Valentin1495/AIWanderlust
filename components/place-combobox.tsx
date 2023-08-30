@@ -30,7 +30,6 @@ export default function PlaceCombobox({
     setAreCleared(true);
     const results = await getGeocode({ address: val });
     const { lat, lng } = getLatLng(results[0]);
-    // setSelectedPlace({ address: val, lat, lng });
     updateFields({ place: val, lat, lng });
   };
 

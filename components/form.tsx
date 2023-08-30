@@ -37,24 +37,16 @@ export default function Form() {
     });
   };
 
-  const {
-    currentStepIndex,
-    step,
-    steps,
-    isFirstStep,
-    isLastStep,
-    // goTo,
-    next,
-    back,
-  } = useMultistepForm([
-    <PlaceCombobox
-      {...data}
-      updateFields={updateFields}
-      setAreCleared={setAreCleared}
-    />,
-    <TripLength {...data} updateFields={updateFields} />,
-    <NumOfPeople {...data} updateFields={updateFields} />,
-  ]);
+  const { currentStepIndex, step, steps, isFirstStep, isLastStep, next, back } =
+    useMultistepForm([
+      <PlaceCombobox
+        {...data}
+        updateFields={updateFields}
+        setAreCleared={setAreCleared}
+      />,
+      <TripLength {...data} updateFields={updateFields} />,
+      <NumOfPeople {...data} updateFields={updateFields} />,
+    ]);
   const comma = place.includes(',');
   const dash = place.includes('-');
   const indexOfComma = place.indexOf(',');
@@ -69,13 +61,20 @@ export default function Form() {
     formattedPlace = place.slice(0, place.length);
   }
 
+  let formattedNumOfPeople = '';
+  if (numOfPeople === 'Going Solo') {
+    formattedNumOfPeople = 'Going+Solo';
+  } else {
+    formattedNumOfPeople = numOfPeople;
+  }
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!areCleared) return;
     if (!isLastStep) return next();
 
     router.push(
-      `/itinerary/${formattedPlace}?lat=${lat}&lng=${lng}&tripLength=${tripLength}&numOfPeople=${numOfPeople}`
+      `/itinerary/${formattedPlace}?lat=${lat}&lng=${lng}&tripLength=${tripLength}&numOfPeople=${formattedNumOfPeople}`
     );
   };
   const progress = (currentStepIndex / (steps.length - 1)) * 100;

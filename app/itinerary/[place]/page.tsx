@@ -4,6 +4,7 @@ import { DiscussServiceClient } from '@google-ai/generativelanguage';
 import { GoogleAuth } from 'google-auth-library';
 import { MapPinIcon } from '@/components/icons';
 import Map from '@/components/map';
+import formatNumOfPeople from '@/utils/formatNumOfPeople';
 
 type Props = {
   params: {
@@ -23,8 +24,9 @@ export default async function Itinerary({ params, searchParams }: Props) {
   const { place } = params;
   const decodedPlace = decodeURIComponent(place);
   const dayOrDays = tripLength === '1' ? 'day' : 'days';
-  const people = numOfPeople === 'Going solo' ? '' : `with my ${numOfPeople}`;
-
+  const withWhom1 =
+    numOfPeople === 'Going+Solo' ? '' : `with my ${numOfPeople}`;
+  const withWhom2 = formatNumOfPeople(numOfPeople);
   const MODEL_NAME = 'models/chat-bison-001';
   const API_KEY = process.env.PALM_API_KEY;
 
@@ -34,13 +36,13 @@ export default async function Itinerary({ params, searchParams }: Props) {
 
   const messages = [
     {
-      content: `Introduce must-see attractions in ${decodedPlace} to people who wants to visit it like you're a tour guide. They should be clearly labeled '1.', '2.', '3.'... etc. Don't use '**'.`,
+      content: `Introduce must-see attractions in ${decodedPlace} to people who wants to visit it like you're a tour guide. They should be clearly labeled '1.', '2.', '3.'... etc.`,
     },
   ];
 
   const firstResult = await client.generateMessage({
     model: MODEL_NAME, // Required. The model to use to generate the result.
-    temperature: 0.25, // Optional. Value `0.0` always uses the highest-probability result.
+    temperature: 0.5, // Optional. Value `0.0` always uses the highest-probability result.
     candidateCount: 1, // Optional. The number of candidate results to generate.
     prompt: {
       // optional, preamble context to prime responses
@@ -50,7 +52,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
         {
           input: {
             content: `
-          Introduce must-see attractions in Paris to people who wants to visit it like you're a tour guide. They should be clearly labeled '1.', '2.', '3.'... etc. Don't use '**'.
+          Introduce must-see attractions in Paris to people who wants to visit it like you're a tour guide. They should be clearly labeled '1.', '2.', '3.'... etc.
           `,
           },
           output: {
@@ -99,12 +101,12 @@ export default async function Itinerary({ params, searchParams }: Props) {
 
   messages.push({ content: sights });
   messages.push({
-    content: `I'm planning to visit ${decodedPlace} ${people} for ${tripLength} days. Can you curate a tour for me based on the sights you mentioned?`,
+    content: `I'm planning to visit ${decodedPlace} ${withWhom1} for ${tripLength} days. Can you curate a tour for me based on the sights you mentioned?`,
   });
 
   const secondResult = await client.generateMessage({
     model: MODEL_NAME,
-    temperature: 0.25,
+    temperature: 0.5,
     candidateCount: 1,
     prompt: {
       examples: [
@@ -145,53 +147,6 @@ export default async function Itinerary({ params, searchParams }: Props) {
 
   const secondResponse = secondResult[0].candidates![0].content as string;
   const plan = secondResponse;
-  messages.push({ content: plan });
-  messages.push({
-    content: `Give me the exact address of the attractions you mentioned. I want to search for them on Google map. Don't use '**'.`,
-  });
-
-  const thirdResult = await client.generateMessage({
-    model: MODEL_NAME,
-    temperature: 0.25,
-    candidateCount: 1,
-    prompt: {
-      examples: [
-        {
-          input: {
-            content: `Give me the exact address of the attractions you mentioned. I want to search for them on Google map. Don't use '**'.`,
-          },
-          output: {
-            content: `
-            1. Eiffel Tower: 5 Avenue Anatole France, 75007 Paris, France
-            2. Louvre Museum: 99 Rue de Rivoli, 75001 Paris, France
-            3. Notre Dame Cathedral: 6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris, France
-            `,
-          },
-        },
-      ],
-      messages,
-    },
-  });
-
-  const thirdResponse = thirdResult[0].candidates![0]?.content as string;
-  console.log(thirdResponse);
-
-  const addressRegex = /:\s(.*?)(?=\n|$)/g;
-  const addressesArray = thirdResponse
-    ?.match(addressRegex)
-    ?.map((item) => item.replace(/:\s/, ''));
-
-  let addresses = addressesArray?.slice(1);
-  if (!addresses?.length) {
-    const regex = /\*\*(.*?):\*\*\s(.*?), (.*)/g;
-
-    let match;
-
-    while ((match = regex.exec(thirdResponse)) !== null) {
-      const address = `${match[2]}, ${match[3]}`;
-      addresses?.push(address);
-    }
-  }
 
   return (
     <main className='pb-5'>
@@ -199,9 +154,9 @@ export default async function Itinerary({ params, searchParams }: Props) {
         <MapPinIcon className='h-8 w-8 rounded-full bg-orange-200 p-1.5' />
         <span>This trip is powered by AI.</span>
       </h6>
-      <h1 className='text-3xl font-bold'>{`Your trip to ${decodedPlace} for ${tripLength} ${dayOrDays}`}</h1>
+      <h1 className='text-3xl font-bold'>{`Your trip to ${decodedPlace} for ${tripLength} ${dayOrDays} ${withWhom2}`}</h1>
       <br />
-      <Map lat={Number(lat)} lng={Number(lng)} addresses={addresses} />
+      <Map lat={Number(lat)} lng={Number(lng)} />
       <br />
       <TouristAttractions sights={sights} />
       <Plan plan={plan} />
