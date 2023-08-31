@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function Map({ lat, lng }: Props) {
-  const center = useMemo<LatLngLiteral>(() => ({ lat, lng }), []);
+  const center = useMemo<LatLngLiteral>(() => ({ lat, lng }), [lat, lng]);
 
   const options = useMemo<google.maps.MapOptions>(
     () => ({
