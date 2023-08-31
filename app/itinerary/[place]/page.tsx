@@ -38,7 +38,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
     numOfPeople === 'Going+Solo' ? '' : `with my ${numOfPeople}`;
   const withWhom2 = formatNumOfPeople(numOfPeople);
 
-  const res = await fetch('/api/chat', {
+  const res = await fetch('https://travel-gpt-one.vercel.app/api/chat', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
