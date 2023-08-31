@@ -19,10 +19,10 @@ export default function Loading() {
         className='rounded-xl animate-bounce'
       />
       <p className='w-[402px] text-neutral-600 text-lg bg-neutral-100 p-2 rounded-sm'>
-        {replacedPlace} is a great choice! We're gathering must-see attractions,
-        some tips, and more... <br />
-        (Friendly reminder: AI isn't always perfect, but it'll help you hit the
-        ground running.)
+        {replacedPlace} is a great choice! We&#39;re gathering must-see
+        attractions, some tips, and more... <br />
+        (Friendly reminder: AI isn&#39;t always perfect, but it&#39;ll help you
+        hit the ground running.)
       </p>
     </div>
   );
