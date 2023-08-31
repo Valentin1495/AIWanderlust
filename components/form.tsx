@@ -1,14 +1,14 @@
 'use client';
 
+import { FormEvent, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import PlaceCombobox from '@/components/place-combobox';
 import { useMultistepForm } from '@/hooks/useMultistepForm';
-import { useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
+import replaceBlankWithPlus from '@/utils/replaceBlankWithPlus';
 import TripLength from './trip-length';
 import Header from './header';
 import { ArrowBigLeftDashIcon } from './icons';
 import NumOfPeople from './number-of-people';
-import replaceBlankWithPlus from '@/utils/replaceBlankWithPlus';
 
 export type FormData = {
   place: string;
@@ -41,19 +41,20 @@ export default function Form() {
   const { currentStepIndex, step, steps, isFirstStep, isLastStep, next, back } =
     useMultistepForm([
       <PlaceCombobox
+        key={0}
         {...data}
         updateFields={updateFields}
         setAreCleared={setAreCleared}
       />,
-      <TripLength {...data} updateFields={updateFields} />,
-      <NumOfPeople {...data} updateFields={updateFields} />,
+      <TripLength key={1} {...data} updateFields={updateFields} />,
+      <NumOfPeople key={2} {...data} updateFields={updateFields} />,
     ]);
   const comma = place.includes(',');
   const dash = place.includes('-');
   const indexOfComma = place.indexOf(',');
   const indexOfDash = place.indexOf('-');
-  let formattedPlace = '';
 
+  let formattedPlace = '';
   if (comma) {
     formattedPlace = place.slice(0, indexOfComma);
   } else if (dash) {
