@@ -22,24 +22,6 @@ export default function RootLayout({
     <html lang='en' className={lora.className}>
       <head>
         <link rel='icon' href='/favicons/favicon.ico' />
-        <link
-          rel='apple-touch-icon'
-          sizes='180x180'
-          href='/favicons/apple-touch-icon.png'
-        />
-        <link
-          rel='icon'
-          type='image/png'
-          sizes='32x32'
-          href='/favicons/favicon-32x32.png'
-        />
-        <link
-          rel='icon'
-          type='image/png'
-          sizes='16x16'
-          href='/favicons/favicon-16x16.png'
-        />
-        <link rel='manifest' href='/favicons/site.webmanifest' />
       </head>
       <body className='mt-20 mx-auto px-5 sm:max-w-xl xl:max-w-3xl'>
         <GoogleMapsApiLoader>{children}</GoogleMapsApiLoader>
