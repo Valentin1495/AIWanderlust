@@ -1,11 +1,11 @@
 import TouristAttractions from '@/components/tourist-attractions';
 import Plan from '@/components/plan';
-import { DiscussServiceClient } from '@google-ai/generativelanguage';
-import { GoogleAuth } from 'google-auth-library';
-import { MapPinIcon } from '@/components/icons';
 import Map from '@/components/map';
+import { MapPinIcon } from '@/components/icons';
 import formatNumOfPeople from '@/utils/formatNumOfPeople';
 import replacePlusWithBlank from '@/utils/replacePlusWithBlank';
+import { DiscussServiceClient } from '@google-ai/generativelanguage';
+import { GoogleAuth } from 'google-auth-library';
 
 type Props = {
   params: {
@@ -20,6 +20,8 @@ type Props = {
 };
 
 type Prop = Pick<Props, 'params'>;
+
+export const revalidate = 0;
 
 export async function generateMetadata({ params }: Prop) {
   const { place } = params;
