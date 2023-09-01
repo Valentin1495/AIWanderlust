@@ -38,7 +38,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
     numOfPeople === 'Going+Solo' ? '' : `with my ${numOfPeople}`;
   const withWhom2 = formatNumOfPeople(numOfPeople);
 
-  const res = await fetch('https://travel-gpt-one.vercel.app/api/chat', {
+  const res1 = await fetch('https://travel-gpt-noahhan.vercel.app/api/sights', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -50,8 +50,22 @@ export default async function Itinerary({ params, searchParams }: Props) {
     }),
   });
 
-  const answer = await res.json();
-  const { sights, plan } = answer;
+  const sights = await res1.json();
+
+  const res2 = await fetch('https://travel-gpt-noahhan.vercel.app/api/plan', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      replacedPlace,
+      sights,
+      withWhom1,
+      tripLength,
+    }),
+  });
+
+  const plan = await res2.json();
 
   return (
     <main className='pb-5'>
