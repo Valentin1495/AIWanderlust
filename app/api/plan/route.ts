@@ -3,7 +3,7 @@ import { GoogleAuth } from 'google-auth-library';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
-  const { replacedPlace, sights, withWhom1, tripLength } = await req.json();
+  const { replacedPlace, withWhom1, tripLength } = await req.json();
   const MODEL_NAME = 'models/chat-bison-001';
   const API_KEY = process.env.PALM_API_KEY;
   const dayOrDays = tripLength === '1' ? 'day' : 'days';
@@ -13,13 +13,7 @@ export async function POST(req: Request) {
 
   const messages = [
     {
-      content: `Introduce must-see attractions in ${replacedPlace} to people who wants to visit it like you're a tour guide. They should be clearly labeled '1.', '2.', '3.'... etc.`,
-    },
-    {
-      content: sights,
-    },
-    {
-      content: `I'm planning to visit ${replacedPlace} ${withWhom1} for ${tripLength} ${dayOrDays}. Can you curate a tour for me based on the sights you mentioned?`,
+      content: `I'm planning to visit ${replacedPlace} ${withWhom1} for ${tripLength} ${dayOrDays}. Can you curate a tour for me based on the top attractions?`,
     },
   ];
 
@@ -32,12 +26,12 @@ export async function POST(req: Request) {
         {
           input: {
             content: `
-            I'm planning to visit New York for 3 days. Can you curate a tour for me based on the sights you mentioned?
+            I'm planning to visit New York for 3 days. Can you curate a tour for me based on the top attractions?
             `,
           },
           output: {
             content: `
-            Of course! Paris is a beautiful city with a wealth of attractions to explore. Here's a suggested itinerary for your 3-day trip:
+            Paris is a beautiful city with a wealth of attractions to explore. Here's a suggested itinerary for your 3-day trip:
       
             Day 1: Explore the Icons
               Morning: Start your day at the iconic Eiffel Tower. Arrive early to beat the crowds and enjoy breathtaking views of the city from the top.
@@ -65,7 +59,6 @@ export async function POST(req: Request) {
   });
 
   const secondResponse = secondResult[0].candidates![0].content as string;
-  const plan = secondResponse;
 
-  return NextResponse.json(plan);
+  return NextResponse.json(secondResponse);
 }

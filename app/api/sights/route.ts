@@ -73,7 +73,6 @@ export async function POST(req: Request) {
     },
   });
   const firstResponse = firstResult[0].candidates![0].content as string;
-  const sights = firstResponse;
 
-  return NextResponse.json(sights);
+  return NextResponse.json(firstResponse);
 }

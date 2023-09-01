@@ -2,7 +2,7 @@ const formatNumOfPeople = (numOfPeople: string) => {
   let formattedNumOfPeople = '';
 
   switch (numOfPeople) {
-    case 'Going+Solo':
+    case 'Going%Solo':
       formattedNumOfPeople = '';
       break;
     case 'Friends':

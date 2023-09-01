@@ -4,7 +4,6 @@ import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import PlaceCombobox from '@/components/place-combobox';
 import { useMultistepForm } from '@/hooks/useMultistepForm';
-import replaceBlankWithPlus from '@/utils/replaceBlankWithPlus';
 import TripLength from './trip-length';
 import Header from './header';
 import { ArrowBigLeftDashIcon } from './icons';
@@ -63,21 +62,13 @@ export default function Form() {
     formattedPlace = place.slice(0, place.length);
   }
 
-  let formattedNumOfPeople = '';
-  if (numOfPeople === 'Going Solo') {
-    formattedNumOfPeople = 'Going+Solo';
-  } else {
-    formattedNumOfPeople = numOfPeople;
-  }
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!areCleared) return;
     if (!isLastStep) return next();
-    formattedPlace = replaceBlankWithPlus(formattedPlace);
 
     router.push(
-      `/itinerary/${formattedPlace}?lat=${lat}&lng=${lng}&tripLength=${tripLength}&numOfPeople=${formattedNumOfPeople}`
+      `/sights/${formattedPlace}?lat=${lat}&lng=${lng}&tripLength=${tripLength}&numOfPeople=${numOfPeople}`
     );
   };
   const progress = (currentStepIndex / (steps.length - 1)) * 100;

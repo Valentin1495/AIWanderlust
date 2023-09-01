@@ -1,9 +1,8 @@
-import TouristAttractions from '@/components/tourist-attractions';
 import Plan from '@/components/plan';
 import Map from '@/components/map';
 import { MapPinIcon } from '@/components/icons';
 import formatNumOfPeople from '@/utils/formatNumOfPeople';
-import replacePlusWithBlank from '@/utils/replacePlusWithBlank';
+import formatPlace from '@/utils/formatPlace';
 
 type Props = {
   params: {
@@ -22,23 +21,23 @@ type Prop = Pick<Props, 'params'>;
 export async function generateMetadata({ params }: Prop) {
   const { place } = params;
   const decodedPlace = decodeURIComponent(place);
-  const replacedPlace = replacePlusWithBlank(decodedPlace);
+  const replacedPlace = formatPlace(decodedPlace);
   return {
     title: `TravelGPT - ${replacedPlace} Itinerary`,
   };
 }
 
 export default async function Itinerary({ params, searchParams }: Props) {
-  const { numOfPeople, tripLength, lat, lng } = searchParams;
   const { place } = params;
   const decodedPlace = decodeURIComponent(place);
-  const replacedPlace = replacePlusWithBlank(decodedPlace);
+  const replacedPlace = formatPlace(decodedPlace);
+  const { numOfPeople, tripLength, lat, lng } = searchParams;
   const dayOrDays = tripLength === '1' ? 'day' : 'days';
   const withWhom1 =
-    numOfPeople === 'Going+Solo' ? '' : `with my ${numOfPeople}`;
+    numOfPeople === 'Going%20Solo' ? '' : `with my ${numOfPeople}`;
   const withWhom2 = formatNumOfPeople(numOfPeople);
 
-  const res1 = await fetch('https://travel-gpt-noahhan.vercel.app/api/sights', {
+  const res = await fetch('http://localhost:3000/api/plan', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -50,22 +49,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
     }),
   });
 
-  const sights = await res1.json();
-
-  const res2 = await fetch('https://travel-gpt-noahhan.vercel.app/api/plan', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      replacedPlace,
-      sights,
-      withWhom1,
-      tripLength,
-    }),
-  });
-
-  const plan = await res2.json();
+  const plan = await res.json();
 
   return (
     <main className='pb-5'>
@@ -77,7 +61,6 @@ export default async function Itinerary({ params, searchParams }: Props) {
       <br />
       <Map lat={Number(lat)} lng={Number(lng)} />
       <br />
-      <TouristAttractions sights={sights} />
       <Plan plan={plan} />
     </main>
   );
