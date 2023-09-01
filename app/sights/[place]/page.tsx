@@ -32,8 +32,7 @@ export default async function Sights({ params, searchParams }: Props) {
   const decodedPlace = decodeURIComponent(place);
   const replacedPlace = formatPlace(decodedPlace);
 
-  //https://travel-gpt-noahhan.vercel.app
-  const res = await fetch('http://localhost:3000/api/sights', {
+  const res = await fetch('https://travel-gpt-noahhan.vercel.app/api/sights', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
