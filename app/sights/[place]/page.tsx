@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Prop) {
     title: `TravelGPT - Top Attractions in ${replacedPlace}`,
   };
 }
-
+export const revalidate = 0;
 export default async function Sights({ params, searchParams }: Props) {
   const { numOfPeople, tripLength, lat, lng } = searchParams;
   const { place } = params;

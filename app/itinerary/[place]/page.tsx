@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Prop) {
     title: `TravelGPT - ${replacedPlace} Itinerary`,
   };
 }
-
+export const revalidate = 0;
 export default async function Itinerary({ params, searchParams }: Props) {
   const { place } = params;
   const decodedPlace = decodeURIComponent(place);
