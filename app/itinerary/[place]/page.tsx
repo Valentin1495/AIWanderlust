@@ -38,7 +38,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
     numOfPeople === 'Going%20Solo' ? '' : `with my ${numOfPeople}`;
   const withWhom2 = formatNumOfPeople(numOfPeople);
   const res = await fetch(
-    '  https://main.dqm17qky4qoqa.amplifyapp.com/api/itinerary',
+    'https://main.dqm17qky4qoqa.amplifyapp.com/api/itinerary`',
     {
       method: 'POST',
       headers: {
