@@ -1,3 +1,4 @@
+import TouristAttractions from '@/components/tourist-attractions';
 import Plan from '@/components/plan';
 import Map from '@/components/map';
 import { MapPinIcon } from '@/components/icons';
@@ -26,30 +27,33 @@ export async function generateMetadata({ params }: Prop) {
     title: `TravelGPT - ${replacedPlace} Itinerary`,
   };
 }
-export const revalidate = 0;
+
 export default async function Itinerary({ params, searchParams }: Props) {
+  const { numOfPeople, tripLength, lat, lng } = searchParams;
   const { place } = params;
   const decodedPlace = decodeURIComponent(place);
   const replacedPlace = formatPlace(decodedPlace);
-  const { numOfPeople, tripLength, lat, lng } = searchParams;
   const dayOrDays = tripLength === '1' ? 'day' : 'days';
   const withWhom1 =
     numOfPeople === 'Going%20Solo' ? '' : `with my ${numOfPeople}`;
   const withWhom2 = formatNumOfPeople(numOfPeople);
+  const res = await fetch(
+    '  https://main.dqm17qky4qoqa.amplifyapp.com/api/itinerary',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        replacedPlace,
+        withWhom1,
+        tripLength,
+      }),
+    }
+  );
 
-  const res = await fetch('https://travel-gpt-noahhan.vercel.app/api/plan', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      replacedPlace,
-      withWhom1,
-      tripLength,
-    }),
-  });
-
-  const plan = await res.json();
+  const answer = await res.json();
+  const { sights, plan } = answer;
 
   return (
     <main className='pb-5'>
@@ -61,6 +65,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
       <br />
       <Map lat={Number(lat)} lng={Number(lng)} />
       <br />
+      <TouristAttractions sights={sights} />
       <Plan plan={plan} />
     </main>
   );

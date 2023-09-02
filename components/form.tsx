@@ -68,7 +68,7 @@ export default function Form() {
     if (!isLastStep) return next();
 
     router.push(
-      `/sights/${formattedPlace}?lat=${lat}&lng=${lng}&tripLength=${tripLength}&numOfPeople=${numOfPeople}`
+      `/itinerary/${formattedPlace}?lat=${lat}&lng=${lng}&tripLength=${tripLength}&numOfPeople=${numOfPeople}`
     );
   };
   const progress = (currentStepIndex / (steps.length - 1)) * 100;
