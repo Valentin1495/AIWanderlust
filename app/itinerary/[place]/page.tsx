@@ -168,8 +168,8 @@ export default async function Itinerary({ params, searchParams }: Props) {
       </h6>
       <h1 className='text-3xl font-bold'>{`Your trip to ${replacedPlace} for ${tripLength} ${dayOrDays} ${withWhom2}`}</h1>
       <br />
-      {/* <Map lat={Number(lat)} lng={Number(lng)} />
-      <br /> */}
+      <Map lat={Number(lat)} lng={Number(lng)} />
+      <br />
       <TouristAttractions sights={sights} />
       <Plan plan={plan} />
     </main>
