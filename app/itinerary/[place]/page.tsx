@@ -37,8 +37,9 @@ export default async function Itinerary({ params, searchParams }: Props) {
   const withWhom1 =
     numOfPeople === 'Going%20Solo' ? '' : `with my ${numOfPeople}`;
   const withWhom2 = formatNumOfPeople(numOfPeople);
+  const appUrl = process.env.APP_URL;
 
-  const res = await fetch('https://travel-gpt-noahhan.vercel.app/api/chat', {
+  const res = await fetch(`${appUrl}/api/chat`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
