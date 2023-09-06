@@ -40,8 +40,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
     }),
   });
 
-  const data = await res.json();
-  const sights = data.candidates[0].content;
+  const answer = await res.json();
 
   return (
     <main className='pb-5'>
@@ -53,7 +52,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
       <br />
       <Map lat={Number(lat)} lng={Number(lng)} />
       <br />
-      <TouristAttractions sights={sights} />
+      <TouristAttractions sights={answer} />
     </main>
   );
 }
