@@ -68,8 +68,9 @@ export default function Form() {
     if (!areCleared) return;
     if (!isLastStep) return next();
 
+    const encodedActvity = encodeURIComponent(activity);
     router.push(
-      `/itinerary/${formattedPlace}?lat=${lat}&lng=${lng}&activity=${activity}`
+      `/itinerary/${formattedPlace}?lat=${lat}&lng=${lng}&activity=${encodedActvity}`
     );
   };
   const progress = (currentStepIndex / (steps.length - 1)) * 100;
