@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   const messages = [
     {
       content: `
-        I want to spend my time enjoying ${replacedActivity} in ${replacedPlace}. Can you recommend a plan for me? Make sure your answer is less than 400 characters.
+        I want to spend my time enjoying ${replacedActivity} in ${replacedPlace} for a day. Can you curate a tour for me? Make sure your answer is less than 400 characters.
       `,
     },
   ];
