@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   const messages = [
     {
       content: `
-        I want to spend my time enjoying ${replacedActivity} in ${replacedPlace} for a day. Can you curate a tour for me? Make sure it is really simple, so that I can get your answer in 10 seconds.
+        I want to spend my time enjoying ${replacedActivity} in ${replacedPlace} for a day. Can you curate a tour for me? Make sure it is really short and simple, so that I can get your answer in 10 seconds.
       `,
     },
   ];
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     candidateCount: 1, // Optional. The number of candidate results to generate.
     prompt: {
       // optional, preamble context to prime responses
-      // context: "",
+      // context: ''
       // Optional. Examples for further fine-tuning of responses.
       //   examples: [
       //     {
