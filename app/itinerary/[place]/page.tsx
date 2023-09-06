@@ -1,7 +1,7 @@
 import Map from '@/components/map';
 import { MapPinIcon } from '@/components/icons';
-import deleteString from '@/utils/delete-string';
 import Plan from '@/components/plan';
+import deleteString from '@/utils/delete-string';
 
 type Props = {
   params: {
@@ -25,15 +25,15 @@ export async function generateMetadata({ params }: Prop) {
     title: `TravelGPT - ${replacedPlace} Itinerary`,
   };
 }
-export const revalidate = 3600;
+export const revalidate = 0;
 export default async function Itinerary({ params, searchParams }: Props) {
   const { lat, lng, activity } = searchParams;
   const { place } = params;
   const decodedPlace = decodeURIComponent(place);
   const replacedPlace = deleteString(decodedPlace);
   const replacedActivity = deleteString(activity);
-
-  const res = await fetch('https://travel-gpt-noahhan.vercel.app/api/chat', {
+  // https://travel-gpt-noahhan.vercel.app
+  const res = await fetch('http://localhost:3000/api/chat', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
