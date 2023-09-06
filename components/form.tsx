@@ -4,32 +4,29 @@ import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import PlaceCombobox from '@/components/place-combobox';
 import { useMultistepForm } from '@/hooks/useMultistepForm';
-import TripLength from './trip-length';
 import Header from './header';
 import { ArrowBigLeftDashIcon } from './icons';
-import NumOfPeople from './number-of-people';
+import Activity from './activity';
 
 export type FormData = {
   place: string;
   lat: number | null;
   lng: number | null;
-  tripLength: number;
-  numOfPeople: string;
+  activity: string;
 };
 
 const INITIAL_DATA = {
   place: '',
   lat: null,
   lng: null,
-  tripLength: 3,
-  numOfPeople: '',
+  activity: '',
 };
 
 export default function Form() {
   const [data, setData] = useState<FormData>(INITIAL_DATA);
   const [areCleared, setAreCleared] = useState<boolean>(false);
   const router = useRouter();
-  const { place, tripLength, numOfPeople, lat, lng } = data;
+  const { place, activity, lat, lng } = data;
 
   const updateFields = (fields: Partial<FormData>) => {
     setData((prev) => {
@@ -45,8 +42,12 @@ export default function Form() {
         updateFields={updateFields}
         setAreCleared={setAreCleared}
       />,
-      <TripLength key={1} {...data} updateFields={updateFields} />,
-      <NumOfPeople key={2} {...data} updateFields={updateFields} />,
+      <Activity
+        key={1}
+        {...data}
+        activity={activity}
+        updateFields={updateFields}
+      />,
     ]);
   const comma = place.includes(',');
   const dash = place.includes('-');
@@ -68,7 +69,7 @@ export default function Form() {
     if (!isLastStep) return next();
 
     router.push(
-      `/itinerary/${formattedPlace}?lat=${lat}&lng=${lng}&tripLength=${tripLength}&numOfPeople=${numOfPeople}`
+      `/itinerary/${formattedPlace}?lat=${lat}&lng=${lng}&activity=${activity}`
     );
   };
   const progress = (currentStepIndex / (steps.length - 1)) * 100;

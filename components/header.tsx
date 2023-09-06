@@ -26,7 +26,7 @@ export default function Header({
         className='bg-orange-300 h-1.5'
         style={{
           width: progressPct,
-          transition: 'width 0.3s linear',
+          transition: 'width 0.15s linear',
         }}
       ></div>
     </div>
