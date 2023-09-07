@@ -25,6 +25,7 @@ const INITIAL_DATA = {
 export default function Form() {
   const [data, setData] = useState<FormData>(INITIAL_DATA);
   const [areCleared, setAreCleared] = useState<boolean>(false);
+  const [errMsg, setErrMsg] = useState<string>('');
   const router = useRouter();
   const { place, activity, lat, lng } = data;
 
@@ -47,6 +48,8 @@ export default function Form() {
         {...data}
         activity={activity}
         updateFields={updateFields}
+        errMsg={errMsg}
+        setErrMsg={setErrMsg}
       />,
     ]);
   const comma = place.includes(',');
@@ -67,11 +70,14 @@ export default function Form() {
     e.preventDefault();
     if (!areCleared) return;
     if (!isLastStep) return next();
-
-    const encodedActvity = encodeURIComponent(activity);
-    router.push(
-      `/itinerary/${formattedPlace}?lat=${lat}&lng=${lng}&activity=${encodedActvity}`
-    );
+    if (activity) {
+      const encodedActvity = encodeURIComponent(activity);
+      router.push(
+        `/itinerary/${formattedPlace}?lat=${lat}&lng=${lng}&activity=${encodedActvity}`
+      );
+    } else {
+      setErrMsg('Please select at least one activity');
+    }
   };
   const progress = (currentStepIndex / (steps.length - 1)) * 100;
 

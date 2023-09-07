@@ -1,12 +1,19 @@
-import { MouseEvent } from 'react';
+import { Dispatch, MouseEvent, SetStateAction } from 'react';
 import { FormData } from './form';
 
 type Props = {
   activity: string;
   updateFields: (fields: Partial<FormData>) => void;
+  errMsg: string;
+  setErrMsg: Dispatch<SetStateAction<string>>;
 };
 
-export default function Activity({ activity, updateFields }: Props) {
+export default function Activity({
+  activity,
+  updateFields,
+  errMsg,
+  setErrMsg,
+}: Props) {
   const activities = [
     'Must-see Attractions',
     'Hidden Gems',
@@ -26,6 +33,7 @@ export default function Activity({ activity, updateFields }: Props) {
   const handleClick = (e: MouseEvent, activity: string) => {
     e.preventDefault();
     updateFields({ activity });
+    setErrMsg('');
   };
 
   return (
@@ -34,7 +42,7 @@ export default function Activity({ activity, updateFields }: Props) {
         How do you want to spend your time?
       </h1>
       <h4 className='text-neutral-600 mt-1'>Choose one.</h4>
-      <section className='mt-5'>
+      <section className='mt-10'>
         {activities.map((el, i) => (
           <button
             key={i}
@@ -46,7 +54,12 @@ export default function Activity({ activity, updateFields }: Props) {
             {el}
           </button>
         ))}
-      </section>
+      </section>{' '}
+      {errMsg && (
+        <p className='mt-3 bg-orange-100 text-sm w-fit px-2 py-1 rounded-sm'>
+          {errMsg}
+        </p>
+      )}
     </div>
   );
 }
