@@ -10,7 +10,7 @@ TravelGPT is your ultimate companion for planning memorable and personalized tra
 
   ![image](https://github.com/Valentin1495/TravelGPT/assets/69514169/508c2b9e-e597-4b56-82eb-f8b7758f8ed6)
 
-  ![image](https://github.com/Valentin1495/TravelGPT/assets/69514169/48bbc63c-9cd9-4d71-a73c-0f310aa534b2)
+  ![image](https://github.com/Valentin1495/TravelGPT/assets/69514169/4fa377ce-7bd9-4e1b-9825-797011ff01c5)
 
 - **Google Maps:** The Google Maps integration provides interactive maps with a pinned location. Navigate your destination with ease and confidence.
 
