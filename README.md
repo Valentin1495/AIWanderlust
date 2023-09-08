@@ -1,5 +1,7 @@
 # TravelGPT
 
+![image](https://github.com/Valentin1495/TravelGPT/assets/69514169/ba87989f-81ee-4c95-a829-1af689ea888e)
+
 ## Overview
 
 TravelGPT is your ultimate companion for planning memorable and personalized travel experiences. Say goodbye to hours of researching and organizing, and let our AI-powered Travel Itinerary Planner take care of the hard work for you. Whether you're a globetrotter or a casual traveler, TravelGPT will create a tailor-made itinerary that matches your interests and preferences.
