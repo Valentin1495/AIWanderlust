@@ -35,7 +35,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
   const replacedPlace = deleteString(decodedPlace);
   const replacedActivity = deleteString(activity);
 
-  const res = await fetch('http://localhost:3000/api/chat', {
+  const res = await fetch('https://aiwanderlust-noahhan.vercel.app/api/chat', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
