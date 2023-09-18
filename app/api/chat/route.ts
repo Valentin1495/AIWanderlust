@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   const messages = [
     {
       content: `
-        I want to spend my time enjoying ${replacedActivity} in ${replacedPlace} for a day. Can you curate a tour for me? Make sure it is short and simple.
+        I want to spend my time enjoying ${replacedActivity} in ${replacedPlace} for 1 day. Can you curate a tour for me? Make sure it is short and simple.
       `,
     },
   ];
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
         {
           input: {
             content: `
-              Can you curate a tour to paris for a day? Make sure it is really short and simple.
+              Can you curate a tour to paris for 1 day? Make sure the itinerary is clearly labeled morning, lunch, afternoon, evening, dinner and night. It should contain less than 700 characters. Don't provide additional details about it. I just need an itinerary.
               `,
           },
           output: {
