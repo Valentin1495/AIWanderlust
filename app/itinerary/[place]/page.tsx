@@ -22,10 +22,12 @@ export async function generateMetadata({ params }: Prop) {
   const replacedPlace = deleteString(decodedPlace);
 
   return {
-    title: `TravelGPT - ${replacedPlace} Itinerary`,
+    title: `AIWanderlust - ${replacedPlace} Itinerary`,
   };
 }
-export const revalidate = 0;
+
+export const revalidate = 3600;
+
 export default async function Itinerary({ params, searchParams }: Props) {
   const { lat, lng, activity } = searchParams;
   const { place } = params;
@@ -33,7 +35,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
   const replacedPlace = deleteString(decodedPlace);
   const replacedActivity = deleteString(activity);
 
-  const res = await fetch('https://travel-gpt-noahhan.vercel.app/api/chat', {
+  const res = await fetch('https://aiwanderlust-noahhan.vercel.app/api/chat', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -43,6 +45,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
       replacedActivity,
     }),
   });
+
   const answer = await res.json();
 
   return (
@@ -51,7 +54,9 @@ export default async function Itinerary({ params, searchParams }: Props) {
         <MapPinIcon className='h-8 w-8 rounded-full bg-orange-200 p-1.5' />
         <span>This trip is powered by AI.</span>
       </h6>
-      <h1 className='text-3xl font-bold'>{`Your trip to ${replacedPlace}`}</h1>
+      <h1 className='text-3xl font-bold'>
+        {`Your trip to ${replacedPlace}`} for 1 day
+      </h1>
       <br />
       <Map lat={Number(lat)} lng={Number(lng)} />
       <br />
