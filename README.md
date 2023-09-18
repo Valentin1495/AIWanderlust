@@ -1,6 +1,6 @@
 # AIWanderlust
 
-![image](https://github.com/Valentin1495/TravelGPT/assets/69514169/ba87989f-81ee-4c95-a829-1af689ea888e)
+![image](https://github.com/Valentin1495/AIWanderlust/assets/69514169/16b0c020-5aef-434d-a058-3278963319b2)
 
 ## Overview
 
@@ -16,11 +16,11 @@ AIWanderlust is your ultimate companion for planning memorable and personalized 
 
 - **Google Maps:** The Google Maps integration provides interactive maps with a pinned location. Navigate your destination with ease and confidence.
 
-  ![image](https://github.com/Valentin1495/TravelGPT/assets/69514169/eb1ffe1a-71ae-41b8-abf9-7db39effed11)
+  ![image](https://github.com/Valentin1495/AIWanderlust/assets/69514169/30427377-bb1a-496f-be82-2cab6a4c19ae)
 
 - **Personalized Recommendations:** Google's advanced AI, powered by the [PaLM API](https://developers.generativeai.google/guide/palm_api_overview), takes your interests and preferences into account. AIWanderlust suggests activities, attractions, and experiences that resonate with you.
 
-  ![image](https://github.com/Valentin1495/TravelGPT/assets/69514169/8cbf51b9-dd28-4c10-82de-efccecbffa79)
+  ![image](https://github.com/Valentin1495/AIWanderlust/assets/69514169/82f56a34-c2b8-4266-9859-a442823b4a0b)
 
 ## Technologies
 
