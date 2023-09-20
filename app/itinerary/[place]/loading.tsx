@@ -19,8 +19,7 @@ export default function Loading() {
         width={402}
         height={267}
         priority
-        placeholder='blur'
-        className='rounded-xl animate-bounce'
+        className='rounded-xl animate-pulse'
       />
       <p className='w-[402px] text-neutral-600 text-lg bg-neutral-100 p-2 rounded-sm'>
         {replacedPlace} is a great choice! We&#39;re gathering information on{' '}

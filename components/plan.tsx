@@ -1,5 +1,5 @@
 type Props = {
-  plan: string;
+  plan?: string | null;
 };
 
 import { Lora } from 'next/font/google';
@@ -13,7 +13,7 @@ export default function Plan({ plan }: Props) {
   return (
     <div>
       <pre className={`whitespace-pre-wrap font-sans ${lora.variable}`}>
-        {plan}
+        {plan ?? 'Model chat-bison-001 cannot generate an itinerary.'}
       </pre>
     </div>
   );

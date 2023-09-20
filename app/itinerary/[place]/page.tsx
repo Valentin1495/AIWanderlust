@@ -2,6 +2,7 @@ import Map from '@/components/map';
 import { MapPinIcon } from '@/components/icons';
 import Plan from '@/components/plan';
 import deleteString from '@/utils/delete-string';
+import { chat } from '@/utils/chat';
 
 type Props = {
   params: {
@@ -35,18 +36,7 @@ export default async function Itinerary({ params, searchParams }: Props) {
   const replacedPlace = deleteString(decodedPlace);
   const replacedActivity = deleteString(activity);
 
-  const res = await fetch('https://aiwanderlust-noahhan.vercel.app/api/chat', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      replacedPlace,
-      replacedActivity,
-    }),
-  });
-
-  const answer = await res.json();
+  const answer = await chat(replacedPlace, replacedActivity);
 
   return (
     <main className='pb-5'>
