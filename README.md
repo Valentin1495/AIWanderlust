@@ -22,7 +22,7 @@ AIWanderlust is your ultimate companion for planning memorable and personalized 
 
   ![image](https://github.com/Valentin1495/AIWanderlust/assets/69514169/82f56a34-c2b8-4266-9859-a442823b4a0b)
 
-## Technologies
+## Built with
 
 - TypeScript
 - React
