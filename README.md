@@ -14,20 +14,20 @@
 
   ![image](https://github.com/Valentin1495/TravelGPT/assets/69514169/4fa377ce-7bd9-4e1b-9825-797011ff01c5)
 
-- _Google Maps를 통한 시각화_ : form을 제출하면, 사용자가 입력한 목적지의 경도와 위도를 **search params**로 전달하고, 이를 이용하여 **Google Maps API**가 해당 위치를 **Google Maps**에 표시합니다.
+- _Google Maps를 통한 시각화_ : Form을 제출하면, 사용자가 입력한 목적지의 경도와 위도를 **search params**로 전달합니다. 이를 이용하여 **Google Maps API**호출하고, 해당 위치를 **Google Maps**에 표시합니다.
 
-  - ![image](https://github.com/Valentin1495/AIWanderlust/assets/69514169/30427377-bb1a-496f-be82-2cab6a4c19ae)
+  ![image](https://github.com/Valentin1495/AIWanderlust/assets/69514169/30427377-bb1a-496f-be82-2cab6a4c19ae)
 
 - _PaLM API에 의한 맞춤 여행 일정 생성_ : 사용자가 선택한 활동도 **search params**로 전달합니다. 여행지와 활동을 prompt에 포함하여 **PaLM API**에 전송합니다.
 
   ![image](https://github.com/Valentin1495/AIWanderlust/assets/69514169/82f56a34-c2b8-4266-9859-a442823b4a0b)
 
-- Next.js가 제공하는 특정 UI를 위한 파일들을 사용했습니다.
+- 특정 UI를 만들기 위해, Next.js에서 제공하는 파일들을 사용했습니다.
 
-  - `layout`: 공통 레이아웃
-  - `loading`: 로딩 UI
-  - `not-found`: Not found UI
-  - `error`: Error UI
+  - `layout.ts`: 공통 레이아웃
+  - `loading.ts`: 로딩 UI
+  - `not-found.ts`: Not found UI
+  - `error.ts`: Error UI
 
 ## Built with
 
