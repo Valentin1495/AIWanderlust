@@ -14,7 +14,7 @@
 
   ![image](https://github.com/Valentin1495/TravelGPT/assets/69514169/4fa377ce-7bd9-4e1b-9825-797011ff01c5)
 
-- _Google Maps를 통한 시각화_ : Form을 제출하면, 사용자가 입력한 목적지의 경도와 위도를 **search params**로 전달합니다. 이를 이용하여 **Google Maps API**호출하고, 해당 위치를 **Google Maps**에 표시합니다.
+- _Google Maps를 통한 시각화_ : Form을 제출하면, 사용자가 입력한 목적지의 경도와 위도를 **search params**로 전달합니다. 이를 이용하여 **Google Maps API**를 호출하고, 해당 위치를 **Google Maps**에 표시합니다.
 
   ![image](https://github.com/Valentin1495/AIWanderlust/assets/69514169/30427377-bb1a-496f-be82-2cab6a4c19ae)
 
@@ -24,10 +24,10 @@
 
 - 특정 UI를 만들기 위해, Next.js에서 제공하는 파일들을 사용했습니다.
 
-  - `layout.ts`: 공통 레이아웃
-  - `loading.ts`: 로딩 UI
-  - `not-found.ts`: Not found UI
-  - `error.ts`: Error UI
+  - `layout.tsx`: 공통 레이아웃
+  - `loading.tsx`: 로딩 UI
+  - `not-found.tsx`: Not found UI
+  - `error.tsx`: Error UI
 
 ## Built with
 
