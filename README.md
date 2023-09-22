@@ -22,7 +22,7 @@
 
   ![image](https://github.com/Valentin1495/AIWanderlust/assets/69514169/82f56a34-c2b8-4266-9859-a442823b4a0b)
 
-- 특정 UI를 만들기 위해, Next.js에서 제공하는 파일들을 사용했습니다.
+- 특정 UI를 만들기 위해, Next.js에서 제공하는 파일들을 사용합니다.
 
   - `layout.tsx`: 공통 레이아웃
   - `loading.tsx`: 로딩 UI
