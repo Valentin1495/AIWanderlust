@@ -5,6 +5,17 @@ import usePlacesAutocomplete, {
 } from 'use-places-autocomplete';
 import { FormData } from './form';
 import { SearchIcon } from './icons';
+import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from '@/components/ui/command';
 
 type Props = {
   place: string;
@@ -59,42 +70,28 @@ export default function PlaceCombobox({
         Where do you want to go?
       </h1>
       <div className='space-y-2'>
-        <section
-          tabIndex={0}
-          className='rounded-full flex items-center gap-x-3 shadow-custom text-neutral-500 px-5 py-3 w-96'
-        >
-          <SearchIcon className='w-6 h-6' />
-          <input
-            required
-            value={place}
-            onChange={(e) => {
-              setAreCleared(false);
-              updateFields({ place: e.target.value });
-              setValue(e.target.value);
-            }}
-            onKeyDown={handleKeyDown}
-            disabled={!ready}
-            placeholder='Search by city or town'
-            className='outline-none w-full'
+        <Command className='rounded-full flex items-center gap-x-3 shadow-custom text-neutral-500 px-5 py-3 w-96'>
+          {/* <SearchIcon className='w-6 h-6' /> */}
+          <CommandInput
+          // required
+          // value={place}
+          // onChange={(e) => {
+          //   setAreCleared(false);
+          //   updateFields({ place: e.target.value });
+          //   setValue(e.target.value);
+          // }}
+          // disabled={!ready}
+          // placeholder='Search by city or town'
+          // className='outline-none w-full'
           />
-        </section>
-        {status === 'OK' && (
-          <ul className='shadow-md rounded-md w-96'>
-            {data.map(({ place_id, description }, i) => (
-              <li
-                key={place_id}
-                className={`${
-                  i === focusedItemIndex
-                    ? 'bg-neutral-100'
-                    : 'hover:bg-neutral-100'
-                } p-3 cursor-pointer`}
-                onClick={() => handleSelect(description)}
-              >
-                {description}
-              </li>
-            ))}
-          </ul>
-        )}
+          {status === 'OK' && (
+            <CommandList className='shadow-md rounded-md w-96'>
+              {data.map(({ place_id, description }, i) => (
+                <CommandItem key={place_id}>{description}</CommandItem>
+              ))}
+            </CommandList>
+          )}
+        </Command>
       </div>
     </div>
   );

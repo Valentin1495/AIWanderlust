@@ -1,4 +1,3 @@
-import GoogleMapsApiLoader from '@/google-maps-api-loader';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Lora } from 'next/font/google';
@@ -19,12 +18,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en' className={lora.className}>
+    <html lang='en' className={lora.className} suppressHydrationWarning>
       <head>
         <link rel='icon' href='/favicons/favicon.ico' />
       </head>
       <body className='mt-20 mx-auto px-5 sm:max-w-xl xl:max-w-3xl'>
-        <GoogleMapsApiLoader>{children}</GoogleMapsApiLoader>
+        {children}
       </body>
     </html>
   );
