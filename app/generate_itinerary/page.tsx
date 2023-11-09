@@ -1,9 +1,9 @@
-import Form from '@/components/form';
+import MultiStepForm from '@/components/multi-step-form';
 
 export default function GenerateItinerary() {
   return (
     <div className='flex justify-center'>
-      <Form />
+      <MultiStepForm />
     </div>
   );
 }

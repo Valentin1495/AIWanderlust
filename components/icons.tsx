@@ -1,42 +1,3 @@
-export const BotIcon = ({ className }: { className: string }) => (
-  <svg
-    xmlns='http://www.w3.org/2000/svg'
-    width='24'
-    height='24'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-    className={className}
-  >
-    <rect width='18' height='10' x='3' y='11' rx='2' />
-    <circle cx='12' cy='5' r='2' />
-    <path d='M12 7v4' />
-    <line x1='8' x2='8' y1='16' y2='16' />
-    <line x1='16' x2='16' y1='16' y2='16' />
-  </svg>
-);
-
-export const ArrowBigLeftDashIcon = ({ className }: { className: string }) => (
-  <svg
-    xmlns='http://www.w3.org/2000/svg'
-    width='24'
-    height='24'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-    className={className}
-  >
-    <path d='M19 15V9' />
-    <path d='M15 15h-3v4l-7-7 7-7v4h3v6z' />
-  </svg>
-);
-
 export const CalendarPlusIcon = ({ className }: { className: string }) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
@@ -148,23 +109,6 @@ export const HeartIcon = ({ className }: { className: string }) => (
   </svg>
 );
 
-export const PlaneIcon = ({ className }: { className: string }) => (
-  <svg
-    xmlns='http://www.w3.org/2000/svg'
-    width='24'
-    height='24'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-    className={className}
-  >
-    <path d='M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z' />
-  </svg>
-);
-
 export const MapPinIcon = ({ className }: { className: string }) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
@@ -180,23 +124,5 @@ export const MapPinIcon = ({ className }: { className: string }) => (
   >
     <path d='M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z' />
     <circle cx='12' cy='10' r='3' />
-  </svg>
-);
-
-export const SearchIcon = ({ className }: { className: string }) => (
-  <svg
-    xmlns='http://www.w3.org/2000/svg'
-    width='24'
-    height='24'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-    className={className}
-  >
-    <circle cx='11' cy='11' r='8' />
-    <path d='m21 21-4.3-4.3' />
   </svg>
 );

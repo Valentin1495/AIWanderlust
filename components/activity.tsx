@@ -1,16 +1,16 @@
 import { Dispatch, MouseEvent, SetStateAction } from 'react';
-import { FormData } from './form';
+import { Data } from './multi-step-form';
 
 type Props = {
   activity: string;
-  updateFields: (fields: Partial<FormData>) => void;
+  setData: Dispatch<SetStateAction<Data>>;
   errMsg: string;
   setErrMsg: Dispatch<SetStateAction<string>>;
 };
 
 export default function Activity({
   activity,
-  updateFields,
+  setData,
   errMsg,
   setErrMsg,
 }: Props) {
@@ -32,7 +32,12 @@ export default function Activity({
 
   const handleClick = (e: MouseEvent, activity: string) => {
     e.preventDefault();
-    updateFields({ activity });
+    setData((prev) => {
+      return {
+        ...prev,
+        activity,
+      };
+    });
     setErrMsg('');
   };
 

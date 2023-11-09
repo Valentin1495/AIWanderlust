@@ -1,4 +1,4 @@
-import { PlaneIcon } from '@/components/icons';
+import { Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
           href={'/generate_itinerary'}
           className='gap-x-2 text-center flex px-5 py-3 btn mt-10'
         >
-          <PlaneIcon className='w-6 h-6' /> Start a trip with AI
+          <Sparkles /> Start a trip with AI
         </Link>
       </div>
     </div>
