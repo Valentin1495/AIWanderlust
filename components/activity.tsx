@@ -4,16 +4,9 @@ import { Data } from './multi-step-form';
 type Props = {
   activity: string;
   setData: Dispatch<SetStateAction<Data>>;
-  errMsg: string;
-  setErrMsg: Dispatch<SetStateAction<string>>;
 };
 
-export default function Activity({
-  activity,
-  setData,
-  errMsg,
-  setErrMsg,
-}: Props) {
+export default function Activity({ activity, setData }: Props) {
   const activities = [
     'Must-see Attractions',
     'Hidden Gems',
@@ -38,7 +31,6 @@ export default function Activity({
         activity,
       };
     });
-    setErrMsg('');
   };
 
   return (
@@ -59,12 +51,7 @@ export default function Activity({
             {el}
           </button>
         ))}
-      </section>{' '}
-      {errMsg && (
-        <p className='mt-3 bg-orange-100 text-sm w-fit px-2 py-1 rounded-sm'>
-          {errMsg}
-        </p>
-      )}
+      </section>
     </div>
   );
 }
