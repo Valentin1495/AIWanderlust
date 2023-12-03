@@ -1,6 +1,6 @@
 'use client';
 
-import { GoogleMap, Marker } from '@react-google-maps/api';
+// import { GoogleMap, Marker } from '@react-google-maps/api';
 import { useMemo } from 'react';
 
 type LatLngLiteral = google.maps.LatLngLiteral;
@@ -25,7 +25,7 @@ export default function Map({ lat, lng }: Props) {
 
   return (
     <div>
-      <GoogleMap
+      {/* <GoogleMap
         zoom={10}
         mapContainerClassName='map-container'
         options={options}
@@ -37,7 +37,7 @@ export default function Map({ lat, lng }: Props) {
             https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png
         `}
         />
-      </GoogleMap>
+      </GoogleMap> */}
     </div>
   );
 }
