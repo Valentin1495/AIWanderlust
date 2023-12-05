@@ -8,36 +8,36 @@ import { Button } from './ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Activity from './activity';
+import TripLength from './trip-length';
 
 export type Data = {
   place?: string;
   activity: string;
-  duration: string;
+  tripLength: number;
 };
 
 export default function MultiStepForm() {
   const initialData: Data = {
     place: undefined,
     activity: '',
-    duration: '',
+    tripLength: 1,
   };
 
   const [data, setData] = useState<Data>(initialData);
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const [secondErr, setSecondErr] = useState<string>('');
   const firstStep = currentStep === 1;
   const lastStep = currentStep === 3;
   const router = useRouter();
-  const { place, activity, duration } = data;
+  const { place, activity, tripLength } = data;
 
   const back = () => {
     setCurrentStep((prev) => prev - 1);
   };
 
   const nextOrPush = () => {
-    if (lastStep && duration) {
+    if (lastStep && tripLength) {
       router.push('/');
-    } else if (lastStep && !duration) {
+    } else if (lastStep && !tripLength) {
       return;
     } else {
       setCurrentStep((prev) => prev + 1);
@@ -65,7 +65,7 @@ export default function MultiStepForm() {
 
       {currentStep === 3 &&
         (activity ? (
-          <h1>duration</h1>
+          <TripLength data={data} setData={setData} />
         ) : (
           <p className='text-sm bg-primary/20 rounded-sm max-w-fit p-1.5 mt-10'>
             Please select an activity
