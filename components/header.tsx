@@ -1,32 +1,45 @@
 import { formatPlace } from '@/lib/utils';
 import { Sparkles } from 'lucide-react';
 
-type Props = {
+type HeaderProps = {
   place?: string;
   currentStep: number;
 };
-export default function Header({ place, currentStep }: Props) {
-  const progress = (currentStep / 3) * 100;
+export default function Header({ place, currentStep }: HeaderProps) {
+  const progress = (currentStep / 4) * 100;
   const progressPct = progress.toString() + '%';
-  const formattedPlace = place ? formatPlace(place) : null;
+  const formattedPlace = place ? formatPlace(place) : '';
 
   return (
-    <div className='fixed top-0 inset-x-0'>
-      <div className='flex flex-col items-center justify-center h-20 shadow-md shadow-primary/30'>
-        <span className='text-sm flex items-center gap-x-2'>
-          <Sparkles className='text-primary' /> Powered by AI
-        </span>
+    <div>
+      <div className='flex flex-col items-center justify-center'>
+        <div className='text-sm flex items-center gap-x-2'>
+          <section className='p-1 bg-primary/60 rounded-full'>
+            <Sparkles
+              className='text-gray-600'
+              size={20}
+              strokeWidth={1.75}
+              color='#ffffff'
+            />
+          </section>
+          Powered by AI
+        </div>
         {formattedPlace && (
-          <h4 className='font-semibold'>{formattedPlace} Itinerary</h4>
+          <h4 className='font-semibold text-sm my-1'>{formattedPlace} 여행</h4>
         )}
+        <span className='text-sm'>{currentStep} of 4</span>
       </div>
-      <div
-        className='bg-primary h-1'
-        style={{
-          width: progressPct,
-          transition: 'width 0.15s linear',
-        }}
-      ></div>
+
+      <div className='relative h-1.5 rounded-full overflow-hidden mt-16'>
+        <div className='absolute left-0 bg-gray-300 h-full w-full' />
+        <div
+          className='bg-gray-900 h-full absolute left-0 rounded-r-full'
+          style={{
+            width: progressPct,
+            transition: 'width 0.15s linear',
+          }}
+        />
+      </div>
     </div>
   );
 }

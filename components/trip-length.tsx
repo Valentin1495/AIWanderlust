@@ -2,16 +2,24 @@
 
 import { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { Data } from './multi-step-form';
-import { CalendarMinus, CalendarPlus } from 'lucide-react';
+import { Check, MinusCircle, PlusCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { months } from '@/lib/constants';
+import { Button } from './ui/button';
 
 type Props = { data: Data; setData: Dispatch<SetStateAction<Data>> };
 
 export default function TripLength({ data, setData }: Props) {
   const { tripLength } = data;
+  const [deactivateMinus, setDeactivateMinus] = useState(false);
+  const [deactivatePlus, setDeactivatePlus] = useState(false);
 
-  const [deactivateMinus, setDeactivateMinus] = useState<boolean>(false);
-  const [deactivatePlus, setDeactivatePlus] = useState<boolean>(false);
+  const selectMonth = (id: number) => {
+    setData((prev) => ({
+      ...prev,
+      month: months.find((month) => month.id === id) || null,
+    }));
+  };
 
   useEffect(() => {
     if (tripLength === 7) {
@@ -41,38 +49,65 @@ export default function TripLength({ data, setData }: Props) {
       });
     }
   };
-  return (
-    <div className='pt-10'>
-      <h1 className='text-3xl font-bold text-neutral-600 mb-5'>
-        How many days?
-      </h1>
-      <h4 className='text-sm text-neutral-600 mb-3'>
-        Choose a number of days. (7 days maximum)
-      </h4>
 
-      <section className='flex items-center gap-x-3'>
-        <button
-          className={cn(
-            'active:text-black/50',
-            deactivateMinus &&
-              'text-black/20 cursor-not-allowed active:text-black/20'
-          )}
-          onClick={subtractDays}
-        >
-          <CalendarMinus className='w-6 h-6' />
-        </button>
-        <span className='text-lg font-bold'>{tripLength}</span>
-        <button
-          className={cn(
-            'active:text-black/50',
-            deactivatePlus &&
-              'text-black/20 cursor-not-allowed active:text-black/20'
-          )}
-          onClick={addDays}
-        >
-          <CalendarPlus className='w-6 h-6' />
-        </button>
-      </section>
+  return (
+    <div className='my-16 flex flex-col items-center'>
+      <h1 className='text-3xl font-bold mb-5'>언제 떠날 예정이신가요?</h1>
+      <p className='text-sm text-neutral-600 mb-3'>
+        달과 여행 기간을 선택해 주세요.
+      </p>
+
+      <div className='w-full'>
+        <div className='my-10'>
+          <div className='grid grid-cols-4 gap-x-16 gap-y-3'>
+            {months.map(({ id, name }) => (
+              <Button
+                size='lg'
+                variant='outline'
+                className={cn(
+                  'rounded-full min-w-[200px]',
+                  `${
+                    data.month?.id === id &&
+                    'bg-primary hover:bg-primary/90 text-white hover:text-white'
+                  }`
+                )}
+                key={id}
+                onClick={() => selectMonth(id)}
+              >
+                {data.month?.id === id && <Check size={16} className='mr-1' />}
+                {name}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        <div className='flex items-center justify-end gap-3'>
+          <div className='flex items-center gap-3'>
+            <button
+              className={cn(
+                'active:text-black/50',
+                deactivateMinus &&
+                  'text-black/20 cursor-auto active:text-black/20'
+              )}
+              onClick={subtractDays}
+            >
+              <MinusCircle className='w-7 h-7' />
+            </button>
+            <span className='text-lg font-bold'>{tripLength}</span>
+            <button
+              className={cn(
+                'active:text-black/50',
+                deactivatePlus &&
+                  'text-black/20 cursor-auto active:text-black/20'
+              )}
+              onClick={addDays}
+            >
+              <PlusCircle className='w-7 h-7' />
+            </button>
+          </div>
+          일
+        </div>
+      </div>
     </div>
   );
 }

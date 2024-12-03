@@ -1,7 +1,9 @@
+'use client';
+
 import { Dispatch, SetStateAction, useState, useRef, useEffect } from 'react';
 import { useAutocomplete } from '@vis.gl/react-google-maps';
-import { Input } from './ui/input';
 import { Data } from './multi-step-form';
+import { Search } from 'lucide-react';
 
 type Props = {
   setData: Dispatch<SetStateAction<Data>>;
@@ -43,19 +45,20 @@ export default function PlaceCombobox({ setData }: Props) {
   }, [inputValue]);
 
   return (
-    <div className='space-y-5 pt-10 flex flex-col items-center'>
-      <h1 className='text-3xl font-bold text-neutral-600 mb-5'>
-        Where do you want to go?
-      </h1>
+    <div className='mt-16 flex flex-col items-center'>
+      <h1 className='text-2xl font-bold mb-5'>먼저, 어디로 가고 싶으신가요?</h1>
+      <p className='text-sm'>맞춤 여행 플랜을 제시해 드릴게요 :) </p>
 
-      <Input
-        required
-        ref={inputRef}
-        value={inputValue}
-        onChange={handleInputChange}
-        placeholder='Search by city or town'
-        className='rounded-full shadow-custom text-neutral-500 px-4 py-2 w-96'
-      />
+      <div className='rounded-full border-2 border-gray-200 shadow-md px-6 py-3 min-w-[400px] my-10 flex items-center gap-3'>
+        <Search strokeWidth={1.75} />
+        <input
+          ref={inputRef}
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder='나라 또는 도시를 선택하세요'
+          className='w-full outline-none'
+        />
+      </div>
     </div>
   );
 }
